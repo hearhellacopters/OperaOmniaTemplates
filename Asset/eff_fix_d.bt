@@ -1,0 +1,27 @@
+//------------------------------------------------
+//--- 010 Editor v12.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: eff_fix_d pack
+//  Category: OO_Asset
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct {
+    short read1;
+    short read2;
+    short read3;
+    short read4;
+    short read5;
+    short read6;
+} read;
+
+struct {
+    local int size = FileSize();
+    size = size / 12;
+    read entries[size]<name="Structs", optimize=true, open=true>;
+} repeat;

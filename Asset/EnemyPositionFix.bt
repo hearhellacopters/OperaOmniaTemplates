@@ -1,0 +1,28 @@
+//------------------------------------------------
+//--- 010 Editor v14.0 Binary Template
+//
+//      File: EnemyAppearFix.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: EnemyAppearFix.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct PositionEntry {
+    short id;
+    short data2;
+    short data3;
+    short data4;
+    short data5;
+    short data6;
+    short data7;
+    short data8;
+}Entry;
+
+struct PositionFix {
+    local int size = FileSize() / 16;
+    PositionEntry data[size]<open=true>;
+} Position<open=true>;

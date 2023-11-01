@@ -1,0 +1,45 @@
+//------------------------------------------------
+//--- 010 Editor v10.0.2 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: weapon_data_143.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct XL20STRUCT {
+    int weapon_modtex_1;
+    int weapon_modtex_2;
+    int unknown3;
+    short unknown4a;
+    short unknown4b;
+    short unknown5a;
+    short unknown5b;
+    short unknown6a;
+    short unknown6b;
+    short unknown7a;
+    short unknown7b;
+    short unknown8a;
+    short unknown8b;
+    short unknown9a;
+    short unknown9b;
+    int weapon_modtex_3;
+    int unknown11;
+    int weapon_modtex_4;
+    int unknown13;
+    int unknown14;
+    int unknown15;
+} XL20Struct;
+
+struct XL20 {
+    ushort magic<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x14">;
+    int count<name="Count">;
+    int max_size<name="Max Size", comment="Not per se actual max size, defines how much memory to allocate to deserialize. Usually aligned to 8 or 16 bytes.">;
+    int start<name="Start Pointer">;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

@@ -1,0 +1,43 @@
+//------------------------------------------------
+//--- 010 Editor v14.0 Binary Template
+//
+//      File: MCFix.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: MCFix_xor.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+//xor with qzc93ji429d9df09sd
+
+typedef struct MCEntry {
+    int data1;
+    int data2;
+    int data3;
+    int data4;
+    int data5;
+    int data6;
+    int data7;
+    int data8;
+    int data9;
+    int data10;
+    short data11;
+    short data12;
+    short data13;
+    short data14;
+    int data15;
+    short data16;
+    short data17;
+    short data18;
+    short data19; 
+    int data20;
+}Entry;
+
+struct MCFix {
+    short entries;
+    short size;
+    MCEntry data[entries+1]<open=true>;
+} MC<open=true>;

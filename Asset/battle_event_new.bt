@@ -1,0 +1,23 @@
+//------------------------------------------------
+//--- 010 Editor v14.0 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: battle_event_new.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct BATTLESTRUCT {
+    int UNKNOWN0;
+    int quest_id;
+    int wave;
+    byte UNKNOWN3;
+} BATTLEStruct;
+
+struct XL20 {
+    BATTLEStruct entries[FileSize()/13]<name="Structs", open=true, optimize=false>;
+} XL<name="XL20", open=true>;

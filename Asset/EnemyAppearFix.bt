@@ -1,0 +1,36 @@
+//------------------------------------------------
+//--- 010 Editor v14.0 Binary Template
+//
+//      File: EnemyAppearFix.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: EnemyAppearFix.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct AppearEntry {
+    short id;
+    short battle_enemy_id;
+    short data3;
+    short data4;
+    short data5;
+    short data6;
+    short data7;
+    short data8;
+    short data9;
+    short data10;
+    short data11;
+    short data12;
+    short data13;
+    short data14;
+    short data15;
+    short data16;
+}Entry;
+
+struct AppearFix {
+    local int size = FileSize() / 32;
+    AppearEntry data[size]<open=true>;
+} Appear<open=true>;

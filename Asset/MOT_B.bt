@@ -1,0 +1,98 @@
+//------------------------------------------------
+//--- 010 Editor v12.0.1 Binary Template
+//
+//      File: MOT B
+//   Authors: Hellacopters
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: MOT_****_B.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct {
+//1
+    ushort read1;
+    ushort read2;
+
+    ushort read3;
+    ushort read4;
+
+    ushort read5;
+    ushort read6;
+
+    ushort read7;
+    short read8 <fgcolor=cLtBlue>;
+//2
+
+    short read9 <fgcolor=cLtBlue>;
+    short read10 <fgcolor=cLtBlue>;
+
+    short read11 <fgcolor=cLtBlue>;
+    ushort read12;
+
+    ushort read13;
+    ushort read14;
+
+    short read15 <fgcolor=cLtBlue>;
+    ushort read16;
+//3
+
+    short read17 <fgcolor=cLtBlue>;
+    ushort read18;
+
+    short read19 <fgcolor=cLtBlue>;
+    ushort read20;
+
+    short read21 <fgcolor=cLtBlue>;
+    ushort read22;
+
+    short read23 <fgcolor=cLtBlue>;
+    ushort read24;
+//4
+
+    ushort read25;
+    ushort read26;
+
+    short read27 <fgcolor=cLtBlue>;
+    ushort read28;
+
+    ushort read29;
+    ushort read30;
+
+    short read31 <fgcolor=cLtBlue>;
+    ushort read32;
+//5
+
+    ushort read33;
+    ushort read34;
+
+    short read35 <fgcolor=cLtBlue>;
+    short read36 <fgcolor=cLtBlue>;
+
+    short read37 <fgcolor=cLtBlue>;
+    short read38 <fgcolor=cLtBlue>;
+
+    short read39 <fgcolor=cLtBlue>;
+    short read40 <fgcolor=cLtBlue>;
+//6
+
+    short read41 <fgcolor=cLtBlue>;
+    short read42 <fgcolor=cLtBlue>;
+
+    short read43 <fgcolor=cLtBlue>;
+    ushort read44;
+
+    ushort read45;
+    short read46 <fgcolor=cLtBlue>;
+
+    ushort read47;
+    ushort read48;
+} read;
+
+struct {
+    local int size = FileSize();
+    size = size / 96;
+    read entries[size]<name="Structs", optimize=true, open=false>;
+} repeat;

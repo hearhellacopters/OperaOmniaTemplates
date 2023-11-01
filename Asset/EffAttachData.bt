@@ -1,0 +1,91 @@
+//------------------------------------------------
+//--- 010 Editor v10.0.2 Binary Template
+//
+//      File: EffAttachData.bt
+//   Authors: Hellacopters
+//   Version: 1.0
+//   Purpose: EffAttachData
+//  Category: OO_Asset
+// File Mask: EffAttachData.bin
+//  ID Bytes: 
+//   History:
+//   1.0      2021-08-26  Hellacopters: Made the original file
+//------------------------------------------------
+
+typedef struct {
+    short TYPE;
+    local int TYPE_1 = TYPE & 1;
+    local int TYPE_1_off6 = (TYPE >> 6) & 1;
+    local int TYPE_32 = TYPE & 0x20;
+    local int TYPE_128 = TYPE & 0x80;
+    local int TYPE_256 = TYPE & 0x100;
+    local int TYPE_512 = TYPE & 0x200;
+    local int TYPE_1024 = TYPE & 0x4000;
+    short MotionID;
+    short EFFECT_ID;
+    short EBattleSeID;
+    short EAbilitySEID;
+    short start_frame;
+    short duration;
+    short bone_id;
+    short offset;
+    short offset_1;
+    short offset_2;
+    short offset_3;
+    short offset_4;
+    short offset_5;
+    short offset_6;
+    ubyte rgb_r;
+    ubyte rgb_g;
+    ubyte rgb_b;
+    ubyte rgb_0;
+    short offset_7;
+    short stage_eff_flag;
+    short stage_eff_value;
+    short offset_8;
+    short offset_9;
+}DATA<open=false>;
+
+
+struct {
+    int count ;
+    local int i<hidden=true> = 0;   
+    local int z<hidden=true> = 0; 
+    local int b<hidden=true> = 0; 
+    local string s<hidden=true>;  
+    for( i = 0; i < count; i++ ){
+        if(i > 999){
+        SPrintf( s, "CT_%d", i );
+        }
+        if(i <= 999){
+        SPrintf( s, "CT_0%d", i );
+        }
+        if(i <= 99 ){
+        SPrintf( s, "CT_00%d", i );
+        }
+        if(i <= 9){
+        SPrintf( s, "CT_000%d", i );
+        }
+        struct { 
+            local int curLoc<hidden=true> = FTell();
+            local string model = s;
+            int Loc<name="Location",fgcolor=cYellow, bgcolor=cBlack>;
+            int size<name="Size",fgcolor=cPurple, bgcolor=cBlack>;
+            curLoc = FTell();
+            FSeek(Loc);
+            local int ReadInShorts<hidden=true> = (size / 44) + 1;
+            for( z = 1; z < ReadInShorts; z++ ){
+                if(size != 0){
+                    if ( i % 2 == 0){
+                        DATA entries<fgcolor=cAqua, bgcolor=cBlack>;
+                    } else{
+                        DATA entries<fgcolor=cRed, bgcolor=cBlack>;
+                    }
+                }
+            }
+            FSeek(curLoc);
+        } EffModel ;
+        z + 1;
+    };
+}EffAttachData<open=false>;
+

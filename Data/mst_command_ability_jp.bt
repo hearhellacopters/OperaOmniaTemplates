@@ -1,0 +1,222 @@
+//------------------------------------------------
+//--- 010 Editor v9.1.0 Binary Template
+//
+//      File: XL20.bt
+//   Authors: Yretenai
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Data
+// File Mask: mst_command_ability.bin
+//  ID Bytes: 58 4C 14 00
+//   History:
+//   1.0    2020-06-26  Yretenai: Initial File
+//------------------------------------------------
+
+LittleEndian();
+
+typedef struct XL20STRING {
+    int size<name="Length">;
+    char text[size]<name="Text">;
+} XL20String;
+
+// !! ADD STRUCT DATA HERE
+// See DFFOO subdir
+typedef struct XL20STRUCT {
+    int Id;
+    int type_;
+    int attack_type_;
+    int target_range_;
+    byte movement_cost_;
+    byte blow_away_;
+    byte isShow;
+    byte stun_;
+    int se_label1_;
+    int se_label1_arg;
+    int se_label1_arg_1;
+    int se_label1_arg_2;
+    int se_label1_arg_3;
+    int se_label1_arg_4;
+    int target_type_;
+    int auto_target_type_;
+    int killer_cond_;
+    int killer_cond_1;
+    int killer_arg_;
+    int killer_arg_1;
+    short killer_effect_value;
+    short stun_arg;
+    short killer_effect_value_1;
+    short stun_arg_1;
+    short ailment_rate;
+    short ailment_rate_1;
+    short ailment_rate_2;
+    short ailment_rate_3;
+    short ailment_rate_4;
+    short ailment_rate_5;
+    short ailment_rate_6;
+    short ailment_rate_7;
+    short ailment_rate_8;
+    short ailment_rate_9;
+    int ailment_type_;
+    int ailment_type_1;
+    int ailment_type_2;
+    int ailment_type_3;
+    int ailment_type_4;
+    int ailment_type_5;
+    int ailment_type_6;
+    int ailment_type_7;
+    int ailment_type_8;
+    int ailment_type_9;
+    int ailment_target_;
+    int ailment_target_1;
+    int ailment_target_2;
+    int ailment_target_3;
+    int ailment_target_4;
+    int ailment_target_5;
+    int ailment_target_6;
+    int ailment_target_7;
+    int ailment_target_8;
+    int ailment_target_9;
+    int ailment_rank_;
+    int ailment_rank_1;
+    int ailment_rank_2;
+    int ailment_rank_3;
+    int ailment_rank_4;
+    int ailment_rank_5;
+    int ailment_rank_6;
+    int ailment_rank_7;
+    int ailment_rank_8;
+    int ailment_rank_9;
+    short ailment_life_;
+    short ailment_life_1;
+    short ailment_life_2;
+    short ailment_life_3;
+    short ailment_life_4;
+    short ailment_life_5;
+    short ailment_life_6;
+    short ailment_life_7;
+    short ailment_life_8;
+    short ailment_life_9;
+    int ailment_cond_;
+    int ailment_cond_1;
+    int ailment_cond_2;
+    int ailment_cond_3;
+    int ailment_cond_4;
+    int ailment_cond_5;
+    int ailment_cond_6;
+    int ailment_cond_7;
+    int ailment_cond_8;
+    int ailment_cond_9;
+    int ailment_cond_arg_;
+    int ailment_cond_arg_1;
+    int ailment_cond_arg_2;
+    int ailment_cond_arg_3;
+    int ailment_cond_arg_4;
+    int ailment_cond_arg_5;
+    int ailment_cond_arg_6;
+    int ailment_cond_arg_7;
+    int ailment_cond_arg_8;
+    int ailment_cond_arg_9;
+    byte ailment_cast_effect_flag_ : 1,
+         ailment_cast_effect_flag_1: 1,
+         ailment_cast_effect_flag_2: 1,
+         ailment_cast_effect_flag_3: 1,
+         ailment_cast_effect_flag_4: 1,
+         ailment_cast_effect_flag_5: 1,
+         ailment_cast_effect_flag_6: 1,
+         ailment_cast_effect_flag_7: 1;
+    byte ailment_cast_effect_flag_8: 1,
+         ailment_cast_effect_flag_9: 1;
+    //break
+    byte no_aspil_;
+    byte focus_attack_flag_;
+    int ailment_arg1_;
+    int ailment_arg1_1;
+    int ailment_arg1_2;
+    int ailment_arg1_3;
+    int ailment_arg1_4;
+    int ailment_arg1_5;
+    int ailment_arg1_6;
+    int ailment_arg1_7;
+    int ailment_arg1_8;
+    int ailment_arg1_9;
+    int ailment_arg2_;
+    int ailment_arg2_1;
+    int ailment_arg2_2;
+    int ailment_arg2_3;
+    int ailment_arg2_4;
+    int ailment_arg2_5;
+    int ailment_arg2_6;
+    int ailment_arg2_7;
+    int ailment_arg2_8;
+    int ailment_arg2_9;
+    byte ailment_hit_num_;
+    byte ailment_hit_num_1;
+    byte ailment_hit_num_2;
+    byte ailment_hit_num_3;
+    byte ailment_hit_num_4;
+    byte ailment_hit_num_5;
+    byte ailment_hit_num_6;
+    byte ailment_hit_num_7;
+    byte ailment_hit_num_8;
+    byte ailment_hit_num_9;
+    byte normal_ability_flag;
+    byte no_charge_ex;
+    byte no_charge_summon;
+    byte no_reduce_ability_num_;
+    XL20STRING start<name="Name">;
+    XL20STRING start<name="btn_disp_name">;
+    XL20STRING start<name="upper_disp_name">;
+    XL20STRING start<name="Description">;
+    int ca_id;
+    int enemy_type_killer_id_;
+    int enemy_type_killer_id_1;
+    int command_type;
+    byte ex_charge_show_flag_;
+    byte no_charge_recast_;
+    byte is_show_in_additional_;
+    byte stun_add_again_flag_;
+    int alt_rank_;
+    int alt_rank_1;
+    int alt_rank_2;
+    int alt_rank_3;
+    int alt_rank_4;
+    int alt_rank_5;
+    int alt_rank_6;
+    int alt_rank_7;
+    int alt_rank_8;
+    int alt_rank_9;
+    int alt_arg1_;
+    int alt_arg1_1;
+    int alt_arg1_2;
+    int alt_arg1_3;
+    int alt_arg1_4;
+    int alt_arg1_5;
+    int alt_arg1_6;
+    int alt_arg1_7;
+    int alt_arg1_8;
+    int alt_arg1_9;
+    int alt_arg2_;
+    int alt_arg2_1;
+    int alt_arg2_2;
+    int alt_arg2_3;
+    int alt_arg2_4;
+    int alt_arg2_5;
+    int alt_arg2_6;
+    int alt_arg2_7;
+    int alt_arg2_8;
+    int alt_arg2_9;
+    int brv_damage_limit_up_rate_;
+    int max_brv_limit_up_rate_;
+    int brv_damage_limit_up_direct_;
+    int max_brv_limit_up_direct_;
+    int ability_type_override_;
+} XL20Struct;
+
+struct XL20 {
+    ushort magic<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x14">;
+    int count<name="Count">;
+    int max_size<name="Max Size", comment="Not per se actual max size, defines how much memory to allocate to deserialize. Usually aligned to 8 or 16 bytes.">;
+    int start<name="Start Pointer">;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

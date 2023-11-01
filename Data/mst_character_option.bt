@@ -1,0 +1,61 @@
+//------------------------------------------------
+//--- 010 Editor v9.1.0 Binary Template
+//
+//      File: XL20.bt
+//   Authors: Yretenai
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Data
+// File Mask: mst_character_option.bin
+//  ID Bytes: 58 4C 14 00
+//   History:
+//   1.0    2020-06-26  Yretenai: Initial File
+//------------------------------------------------
+
+LittleEndian();
+local int cGrayZone = 0xd9dadc;
+
+local int cOrange = 0xaae3f9;
+
+// !! ADD STRUCT DATA HERE
+// See DFFOO subdir
+typedef struct XL20STRUCT {
+    int id;
+	int ability_id;
+    int chara_id;
+    int command1;
+    int command2;
+    int option_type_;
+	int require_target_;
+	int require_label_;
+	int require_valueA_;
+	int require_valueB_;
+	int require_valueC_;
+	int require_target2_;
+	int require_label2_;
+	int require_value2A_;
+	int require_value2B_;
+	int require_value2C_;
+	int Pas_ID1;
+	int Pas_ID2;
+	int Pas_ID3;
+	int Eq_Pas_ID1;
+	int Eq_Pas_ID2;
+	int Eq_Pas_ID3;
+	int Eq_Pas_ID4;
+	int Eq_Pas_ID5;
+	int Eq_Pas_ID6;
+	int require_secret_passive1_;
+	int require_secret_passive2_;
+	int require_secret_passive3_;
+    byte disp_flag_;
+} XL20Struct;
+
+struct XL20 {
+    ushort magic<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x14">;
+    int count<name="Count">;
+    int max_size<name="Max Size", comment="Not per se actual max size, defines how much memory to allocate to deserialize. Usually aligned to 8 or 16 bytes.">;
+    int start<name="Start Pointer">;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

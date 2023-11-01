@@ -1,0 +1,24 @@
+//------------------------------------------------
+//--- 010 Editor v14.0 Binary Template
+//
+//      File: talk_motion.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: talk_motion.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct BATTLESTRUCT {
+    int UNK0;
+    int ani_call1;
+    int ani_call2;
+    int ani_call3;
+    int loop;
+} BATTLEStruct;
+
+struct XL20 {
+    BATTLEStruct entries[FileSize()/20]<name="Structs", open=true, optimize=false>;
+} XL<name="XL20", open=true>;

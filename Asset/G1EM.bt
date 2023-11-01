@@ -1,0 +1,102 @@
+//------------------------------------------------
+//--- 010 Editor v9.0.2 Binary Template
+//
+//      File: G1EM.bt
+//   Authors: Hellacopters / Joschuka
+//   Version: 1.0
+//   Purpose: Parsing G1EM Models
+//  Category: OO_Asset
+// File Mask: *.g1em
+//  ID Bytes: 4D 45 31 47
+//   History:
+//   1.0      2021-08-25  Hellacopters: Made the original file
+//   1.1      2021-08-26  Joschuka: Upadated logic and variable names
+//   1.2      2023-01-25  Hellacopters: Upadated data map / enum
+//------------------------------------------------
+
+LittleEndian();
+
+enum <unsigned short> emunTypes{
+    Null = 0x0,
+    DATA_FLOAT1 = 0x1, //guessing here
+    DATA_FLOAT2 = 0x2,
+    DATA_FLOAT3 = 0x3,
+    DATA_FLOAT4 = 0x4,
+    DATA_UBYTE5 = 0x5,
+    DATA_USHORT7 = 0x7,
+    DATA_HALFFLOATA = 0xA,
+    DATA_HALFFLOATB = 0xB,
+    DATA_UBYTED = 0xD
+};
+
+typedef struct READUNKNOWS {
+    short Unknown0<name="Unknown0", comment="Data could be read in something other than shorts">;
+    short Unknown1<name="Unknown1", comment="Data could be read in something other than shorts">;
+    short Unknown2<name="Unknown2", comment="Data could be read in something other than shorts">;
+    short Unknown3<name="Unknown3", comment="Data could be read in something other than shorts">;
+    short Unknown4<name="Unknown4", comment="Data could be read in something other than shorts">;
+    short Unknown5<name="Unknown5", comment="Data could be read in something other than shorts">;
+    short Unknown6<name="Unknown6", comment="Data could be read in something other than shorts">; 
+    short Unknown7<name="Unknown7", comment="Data could be read in something other than shorts">;
+    short Unknown8<name="Unknown8", comment="Data could be read in something other than shorts">;
+    short Unknown9<name="Unknown9", fgcolor=cBlack, bgcolor=cWhite, comment="Different in ios vs android">;
+} READUNKNOWS;
+
+
+typedef struct READSHORTS {
+    short data<name="data", comment="Data could be read in something other than shorts">;
+} READSHORTS;
+
+typedef struct MESHDATA {
+    int modelID<name="modelID",fgcolor=cGreen, bgcolor=cWhite>;
+    int primType<name="primType",fgcolor=cBlue, bgcolor=cWhite>;
+    int vOffset<name="vOffset",fgcolor=cYellow, bgcolor=cWhite>;
+    int vCount<name="vCount",fgcolor=cPurple, bgcolor=cWhite>;
+    int idxOffset<name="idxOffset",fgcolor=cYellow, bgcolor=cWhite>;
+    int idxCount<name="idxCount",fgcolor=cRed, bgcolor=cWhite>;
+} MESHDATA;
+
+typedef struct SEMANTICCOUNT {
+    short bufferIDs<name="bufferIDs", fgcolor=cAqua, bgcolor=cBlack, comment="layer or bufferID, not sure for now">;
+    short offsets<name="offsets", fgcolor=cAqua, bgcolor=cBlack, comment="offset of the semantic in the vertex buffer">;
+    emunTypes dataTypes<name="dataTypes", fgcolor=cAqua, bgcolor=cBlack>;
+    short semantics<name="semantics", fgcolor=cAqua, bgcolor=cBlack>;
+} SEMANTICCOUNT;
+
+typedef struct MODELDATA {
+    int semanticCount<name="semanticCount", fgcolor=cAqua, bgcolor=cBlack>;
+    SEMANTICCOUNT entries2[semanticCount]<name="semanticCount entries", fgcolor=cAqua, bgcolor=cBlack, optimize=false>;
+    int vertexCount<name="vertexCount", fgcolor=cPurple, bgcolor=cBlack>;
+    int vertexStride<name="vertexStride", fgcolor=cYellow, bgcolor=cBlack>;
+    int idxCount<name="idxCount", fgcolor=cRed, bgcolor=cBlack, comment="Number of shorts read after">;
+    int unk<name="Unknown", fgcolor=cAqua, bgcolor=cBlack, comment="Not sure, could define the primitive type for idx buffer (tri vs tristrip) or the bufferID">;
+    local uint64 Size = 0;
+    Size = (vertexCount * vertexStride) / 2;
+    READSHORTS entries3[Size]<name="vertex entries",open=suppress, fgcolor=cPurple, bgcolor=cBlack>;
+    READSHORTS entries4[idxCount]<name="idxCount entries",open=suppress, fgcolor=cRed, bgcolor=cBlack>;
+} MODELDATA;
+
+struct {
+    char magic[4]<name="Magic", fgcolor=cGreen, bgcolor=cBlack, comment="reversed">;
+    char version[4]<name="Version", fgcolor=cGreen, bgcolor=cBlack, comment="reversed">;
+    int unknownsixteen<name="headerSize">;
+    short modelCount<name="modelCount">;
+    short meshesCount<name="meshesCount">;
+    local int i <hidden=true> = 0;
+    
+    for(i = 0;i < modelCount;i++)
+    {
+        MODELDATA modelEntry<name="model Block", optimize=false>;
+    }
+    i = 0;
+    for(i = 0;i < meshesCount;i++)
+    {
+        MESHDATA meshentry<name="mesh Block", optimize=false>;
+    }
+    i = 0;
+    for(i = 0;i < meshesCount;i++)
+    {
+        READUNKNOWS entries<name="Texture? data", fgcolor=cWhite, bgcolor=cBlack, optimize=false>;
+    }
+    
+} G1EM<name="G1EM", open=true>;

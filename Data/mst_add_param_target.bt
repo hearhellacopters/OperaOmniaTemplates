@@ -1,0 +1,46 @@
+//------------------------------------------------
+//--- 010 Editor v9.1.0 Binary Template
+//
+//      File: XL20.bt
+//   Authors: Yretenai
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Data
+// File Mask: mst_add_param_target.bin
+//  ID Bytes: 58 4C 14 00
+//   History:
+//   1.0    2020-06-26  Yretenai: Initial File
+//------------------------------------------------
+
+LittleEndian();
+
+typedef struct XL20STRING {
+    int size<name="Length">;
+    char text[size]<name="Text">;
+} XL20String;
+
+typedef struct XL20DATE {
+    char text[0x40]<name="Text">;
+} XL20Date;
+
+// !! ADD STRUCT DATA HERE
+// See DFFOO subdir
+typedef struct XL20STRUCT {
+    int id1;
+    int event_id;
+    int chara_id;
+    int add_param_;
+    XL20Date start<name="Start">;
+    XL20Date end<name="End">;
+    int id2;
+	int unknown2;
+} XL20Struct;
+
+struct XL20 {
+    ushort magic<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x14">;
+    int count<name="Count">;
+    int max_size<name="Max Size", comment="Not per se actual max size, defines how much memory to allocate to deserialize. Usually aligned to 8 or 16 bytes.">;
+    int start<name="Start Pointer">;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

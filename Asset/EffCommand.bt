@@ -1,0 +1,57 @@
+//------------------------------------------------
+//--- 010 Editor v11.0 Binary Template
+//
+//      File: EffCommandAbilityData127.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: EffCommandAbilityData127.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+void reader(int size) {
+    local int b<hidden=true> = 0;
+    local int amount = size / 2;
+    for( b = 0; b < amount; b++ ){
+        if(b == 0){
+        short DevOrder;
+        } 
+        if(b == 1){
+        short Unknown2;
+        }
+        if(b == 2){
+        short CommandID;
+        }
+        if(b == 3){
+        short GF1X;
+        } 
+        if(b > 3){
+        short Unknown;
+        } 
+    }
+}
+
+void readloc(int count) {
+    local int locsaver<hidden=true> = FTell();
+    local int jump =0;
+    int locread<fgcolor=cRed, bgcolor=cBlack>;
+    int size<fgcolor=cGreen, bgcolor=cBlack>;
+    local int returnloc<hidden=true> = FTell();
+    FSeek(locread);
+    if(size != 0){
+    reader(size);
+    }
+    FSeek(returnloc);
+}
+
+struct EffData {
+    local int i<hidden=true> = 0;
+    local int count = 0;
+    int count;
+    for( i = 0; i < count; i++ ){
+    readloc(count);
+    count +1;
+    }
+} EffCommand<open=true>;

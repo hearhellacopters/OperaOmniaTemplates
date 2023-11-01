@@ -1,0 +1,214 @@
+//------------------------------------------------
+//--- 010 Editor v11.0 Binary Template
+//
+//      File: ai_action_think_full.bin
+//   Authors: Hellacopters
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: ai_reaction_???.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct {
+    long LabelA;
+    long LabelA_Value1;
+    long LabelA_Value2;
+    long LabelB;
+    long LabelB_Value1;
+    long LabelB_Value2;
+    long LabelC;
+    long LabelC_Value1;
+    long LabelC_Value2;
+    long LabelD;
+    long LabelD_Value1;
+    long LabelD_Value2;
+
+    long Chance1;
+    long UNKNOWN16;
+    long AbilityNumber;
+    long UNKNOWN18;
+    long LabelE;
+    long LabelE_Value1;
+    long LabelE_Value2;
+    long Control1;
+    long Counter1;
+    long Control2;
+    long Counter2;
+    long restrict;
+}DATASIZE1<open=false>;
+
+typedef struct {
+    long LabelA;
+    long LabelA_Value1;
+    long LabelA_Value2;
+    long LabelB;
+    long LabelB_Value1;
+    long LabelB_Value2;
+    long LabelC;
+    long LabelC_Value1;
+    long LabelC_Value2;
+    long LabelD;
+    long LabelD_Value1;
+    long LabelD_Value2;
+
+    long Chance1;
+    long UNKNOWN16;
+    long AbilityNumber;
+    long UNKNOWN18;
+    long LabelE;
+    long LabelE_Value1;
+    long LabelE_Value2;
+    long Control1;
+    long Counter1;
+    long Control2;
+    long Counter2;
+    long restrict;
+    long repeat;
+}DATASIZE2<open=false>;
+
+typedef struct {
+    long LabelA;
+    long LabelA_Value1;
+    long LabelA_Value2;
+    long LabelB;
+    long LabelB_Value1;
+    long LabelB_Value2;
+    long LabelC;
+    long LabelC_Value1;
+    long LabelC_Value2;
+    long LabelD;
+    long LabelD_Value1;
+    long LabelD_Value2;
+
+    long Chance1;
+    long UNKNOWN16;
+    long AbilityNumber;
+    long UNKNOWN18;
+    long LabelE;
+    long LabelE_Value1;
+    long LabelE_Value2;
+    long Control1;
+    long Counter1;
+    long Control2;
+    long Counter2;
+    long restrict;
+    long repeat;
+    long LabelD2;
+    long LabelD2_Value1;
+    long LabelD2_Value2;
+    long LabelD3;
+    long LabelD3_Value1;
+    long LabelD3_Value2;
+}DATASIZE3<open=false>;
+
+typedef struct {
+    long LabelA;
+    long LabelA_Value1;
+    long LabelA_Value2;
+    long LabelB;
+    long LabelB_Value1;
+    long LabelB_Value2;
+    long LabelC;
+    long LabelC_Value1;
+    long LabelC_Value2;
+    long LabelD;
+    long LabelD_Value1;
+    long LabelD_Value2;
+
+    long LabelD2;
+    long LabelD2_Value1;
+    long LabelD2_Value2;
+    long LabelD3;
+    long LabelD3_Value1;
+    long LabelD3_Value2;
+    long Chance1;
+    long UNKNOWN16;
+    long AbilityNumber;
+    long UNKNOWN18;
+    long LabelE;
+    long LabelE_Value1;
+    long LabelE_Value2;
+    long Control1;
+    long Counter1;
+    long Control2;
+    long Counter2;
+    long restrict;
+    long repeat;
+}DATASIZE4<open=false>;
+
+
+struct {
+    local int FileSize =  FileSize();
+    local int i = 0;
+    local int SAVELOC = FTell();
+    local int AISAVE = FTell();
+    while(FileSize != i){
+    int DataSize;
+        if(DataSize == 1){
+        i += 104;
+        int AITEST<hidden=true>;
+        if (AITEST != -1) {
+            AISAVE = (FTell() - 4);
+            FSeek(AISAVE);
+            int AI;
+        } else {
+            SAVELOC = FTell();
+            FSeek(AISAVE);
+            int AI;
+            FSeek(SAVELOC);
+        }
+        DATASIZE1 data;
+        }
+
+        if(DataSize == 2){
+        i += 108;
+        int AITEST<hidden=true>;
+        if (AITEST != -1) {
+            AISAVE = (FTell() - 4);
+            FSeek(AISAVE);
+            int AI;
+        } else {
+            SAVELOC = FTell();
+            FSeek(AISAVE);
+            int AI;
+            FSeek(SAVELOC);
+        }
+        DATASIZE2 data;
+        }
+
+        if(DataSize == 3){
+        i += 132;
+        int AITEST<hidden=true>;
+        if (AITEST != -1) {
+            AISAVE = (FTell() - 4);
+            FSeek(AISAVE);
+            int AI;
+        } else {
+            SAVELOC = FTell();
+            FSeek(AISAVE);
+            int AI;
+            FSeek(SAVELOC);
+        }
+        DATASIZE3 data;
+        }
+
+        if(DataSize == 4){
+        i += 132;
+        int AITEST<hidden=true>;
+        if (AITEST != -1) {
+            AISAVE = (FTell() - 4);
+            FSeek(AISAVE);
+            int AI;
+        } else {
+            SAVELOC = FTell();
+            FSeek(AISAVE);
+            int AI;
+            FSeek(SAVELOC);
+        }
+        DATASIZE4 data;
+        }
+
+    }
+} AI2<name="AI Reaction", open=true>;

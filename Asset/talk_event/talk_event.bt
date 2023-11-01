@@ -1,0 +1,486 @@
+//------------------------------------------------
+//--- 010 Editor v10.0.2 Binary Template
+//
+//      File: talk_event
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: talk_event*.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+ 
+#include "stage.h"
+#include "unit.h"
+#include "talk_motion.h"
+#include "emote.h"
+#include "effects.h"
+
+typedef enum <int> {
+    NoBlink = 0,
+    OpensEyes1 = 1,
+    ShutsEyes = 2,
+    OpensEyes3 = 3,
+    Iroha4 = 4,
+    Iroha14 = 14
+} BLEND;
+
+typedef enum <int> {
+    LowRumble = 1,
+    VeryLowRumble = 2,
+    SuperLowRumble = 3,
+    HeavyTremor4 = 4,
+    MeleeHit = 5,
+    HeavyTremor = 6,
+    MediumMeleeHit = 7,
+    MediumRumble_8 = 8,
+    CrashHit = 10,
+    BigHit = 15,
+    LiteMeleeHit = 20,
+    HeavyMagicHit = 25,
+    LargeRumble = 30,
+    LargeTremor = 50,
+}SCREEN_EFF;
+
+typedef enum <int> {
+    Pause = -1,
+    UnitLoad0 = 0,
+    CameraType1 = 1,
+    StageLoad2 = 2, // also sets BGM
+    FadeIn3 = 3,
+    FadeOut4 = 4, 
+    SceneStart5 = 5, 
+    SceneEnd6 = 6, 
+    Effect7 = 7, 
+    UnitVisOn8 = 8,  
+    UnitVisOff9 = 9,  
+    EffectLocToggle10 = 10, 
+    Camera11 = 11,
+    UnitMove12 = 12,
+    UnitMotUpdate13 = 13,
+    UnitWrap14 = 14, 
+    bgm15 = 15, //UNK4 volume level?
+    EffectToggle16 = 16, 
+    SE001_17 = 17,//for loop it
+    EffectAttach18 = 18, //attaches effect to character with bone
+    EffectDetach19 = 19,
+    ScreenEffectStart20 = 20,
+    ScreenEffectEnd21 = 21,
+    unknown22 = 22,
+    UnitEmoteOffset23 = 23, //unit something
+    UnitMotionDirect24 = 24
+} ACTION;
+
+typedef struct{
+    local int return_to<hidden=true> = FTell();
+    int test<hidden=true>;
+    if(test == 2){
+        FSeek(return_to);
+        int type;
+        ACTION action_type;
+        switch (action_type){
+            case UnitLoad0:
+                int test1<hidden=true>;
+                local UNIT unit_id = (UNIT) (test1 % 10000);
+                if(test1>9999){
+                     local float sub_id = (test1  % 100000) / 10000;
+                }
+                int x_rotate; 
+                int x_off;
+                int y_off;
+                int flag1; //flags for moving the model here
+                int flag2; //flags for moving the model here
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case CameraType1:
+                int camera_id;
+                int x_off;
+                int y_off;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case StageLoad2:
+                int test1<hidden=true>;
+                local STAGE stage_id= (STAGE) test1;   
+                int UNK4; 
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case FadeIn3:
+                int UNK3;
+                int UNK4; 
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case FadeOut4:
+                int UNK3;
+                int UNK4; 
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case SceneStart5:
+                int UNK3;
+                int UNK4; 
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case SceneEnd6:
+                int UNK3;
+                int UNK4; 
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break; 
+            case Effect7:
+                EFFECT talk_effect;
+                int x_off;
+                int y_off;
+                int x_rotate; 
+                int UNK7;
+                int z_off;
+                int eff_scale;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;  
+            case UnitVisOn8:
+                int test1<hidden=true>;
+                local UNIT unit_id<hidden=false> = (UNIT) (test1 % 10000);
+                if(test1>9999){
+                     local float sub_id = (test1  % 100000) / 10000;
+                }
+                int flag1; //flag of some kind, maybe hide model?
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case UnitVisOff9:
+                 int test1<hidden=true>;
+                local UNIT unit_id<hidden=false> = (UNIT) (test1 % 10000);
+                if(test1>9999){
+                     local float sub_id = (test1  % 100000) / 10000;
+                }
+                int flag1;
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case EffectLocToggle10:
+                int x_off;
+                int y_off; 
+                int on_off; //flag of some kind, was 1
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case Camera11:
+                int cam_id;
+                int UNK4; 
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case UnitMove12:
+                int test1<hidden=true>;
+                local UNIT unit_id = (UNIT) (test1 % 10000);
+                if(test1>9999){
+                     local float sub_id = (test1  % 100000) / 10000;
+                }
+                int x_rotate; 
+                int x_off;
+                int y_off;
+                int flag1; //flags for moving the model here
+                int flag2; //flags for moving the model here
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case UnitMotUpdate13:
+                int test1<hidden=true>;
+                local UNIT unit_id = (UNIT) (test1 % 10000);
+                if(test1>9999){
+                     local float sub_id = (test1  % 100000) / 10000;
+                }
+                int x_rotate; 
+                int x_off;
+                int y_off;
+                int UNK7; //flags for moving the model here
+                int UNK8; //flags for moving the model here
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case UnitWrap14:
+                int test1<hidden=true>;
+                local UNIT unit_id = (UNIT) (test1 % 10000);
+                if(test1>9999){
+                     local float sub_id = (test1  % 100000) / 10000;
+                }
+                int x_rotate; 
+                int x_off;
+                int y_off;
+                int UNK7; //flags for moving the model here
+                int UNK8; //flags for moving the model here
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case bgm15:
+                int UNK3;
+                int volume; 
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case EffectToggle16:
+                int flag1;
+                int on_off; 
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case SE001_17:
+                int flag1; //loop?
+                int flag2; 
+                int SE001_b_id;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case EffectAttach18:
+                EFFECT talk_effect;
+                int test1<hidden=true>;
+                local UNIT unit_id = (UNIT) (test1 % 10000);
+                if(test1>9999){
+                     local float sub_id = (test1  % 100000) / 10000;
+                }
+                int bone_id; //maybe
+                int eff_scale; 
+                int flag1;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case EffectDetach19:
+                EFFECT talk_effect;
+                int test1<hidden=true>;
+                local UNIT unit_id = (UNIT) (test1 % 10000);
+                if(test1>9999){
+                     local float sub_id = (test1  % 100000) / 10000;
+                }
+                int bone_id; //maybe
+                int UNK6; 
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case ScreenEffectStart20:
+                SCREEN_EFF screen_eff;
+                int UNK4; 
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case UnitEmoteOffset23:
+                int test1<hidden=true>;
+                local UNIT unit_id = (UNIT) (test1 % 10000);
+                if(test1>9999){
+                     local float sub_id = (test1  % 100000) / 10000;
+                }
+                int x_off; 
+                int y_off;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            case UnitMotionDirect24:
+                int test1<hidden=true>;
+                local UNIT unit_id = (UNIT) (test1 % 10000);
+                if(test1>9999){
+                     local float sub_id = (test1  % 100000) / 10000;
+                }
+                int x_rotate; 
+                int x_off;
+                int y_off;
+                int motion_id; //flags for moving the model here
+                int UNK8; //flags for moving the model here
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+            default:
+                int UNK3;
+                int UNK4; 
+                int UNK5;
+                int UNK6;
+                int UNK7;
+                int UNK8;
+                int UNK9;
+                int UNK10;
+                int UNK11;
+                int UNK12;
+                break;
+        };
+        TALK talk_motion;
+        byte UNK14;
+        int pause; //on a 30 FPS scale
+        float cam_y;
+        float cam_z;
+        float cam_x;
+        float cam_tar_y;
+        float cam_tar_z;
+        float cam_tar_x;
+        int cam_zoom; //Lower the closer to the target
+        EMOTE emote;
+        BLEND blend; //texture blend mode? 2 for eyes close 3 for back to blinking?
+        local int bgm = -1;
+        int test2<hidden=true>;
+        if(test2 > 0){
+            bgm = test2-1;
+        } else {
+            bgm = test2;
+        }
+        int SE001_b;
+        char name[64]<name="name">;
+        UNIT stl_image;
+        int EV_index;
+        char text[512]<name="text">;
+    } else {
+        FSeek(return_to);
+        int type;
+        ACTION action_type;
+        int asset_id;
+        int UNK4;
+        int UNK5;
+        byte UNK6;
+        int UNK7;
+        int UNK8;
+        int UNK9;
+        int UNK10;
+        int UNK11;
+        int UNK12;
+        int UNK13;
+        int UNK14;
+        int UNK15;
+        int UNK16;
+        byte UNK17;
+        byte UNK18;
+        int UNK19;
+        int UNK20;
+        int UNK21;
+        int UNK22;
+        int UNK23;
+        int UNK24;
+        int UNK25;
+        int UNK26;
+        int UNK27;
+        int UNK28;
+        int UNK29;
+        int UNK30;
+        char name[0x40]<name="name">;
+        UNIT stl_image;
+        int EV_index;
+        char text[0x0200]<name="text">;
+    }
+
+} talk_entry;
+
+struct{
+    local int i<hidden=true> = 0;
+    local int count<hidden=true> = FileSize()/685;
+    if(count<1){
+       count = 1;
+    }
+    for(i; i < count; i++){
+        talk_entry entry<optimize=false, open=true>;
+    }
+} talk_event <open=true>;

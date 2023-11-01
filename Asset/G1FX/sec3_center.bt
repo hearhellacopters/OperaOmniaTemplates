@@ -1,0 +1,106 @@
+//------------------------------------------------
+//--- 010 Editor v11.0 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+struct {
+    local int size = FileSize();
+
+    local int i<hidden=true> = 0;
+    local int locsaver<hidden=true> = FTell();
+    int center_ReadableData<fgcolor=cRed, bgcolor=cBlack>;
+    short center_1Controler1<fgcolor=cGreen, bgcolor=cBlack>;
+    short center_2Controler2<fgcolor=cGreen, bgcolor=cBlack>;
+    int center_3;
+    int center_4;
+    int center_5;
+    int center_6;
+    int center_7;
+    int center_8;
+    if (center_1Controler1 == 3){
+        float center_9<fgcolor=cAqua, bgcolor=cBlack>;
+        int center_10;
+        short center_11a;
+        short center_11b;
+        float center_12;
+        float center_13;
+        float center_14;
+        float center_15;
+        float center_16;
+        float center_17;
+        float center_18;
+        float center_19;
+        float center_20;
+        float center_21;
+        float center_22;
+        float center_23;
+        float center_24;
+        int center_25;
+        short center_25a;
+        short center_25b;
+        for( i = 0; i < 56 ; i++ ){
+            float readfloat<fgcolor=cAqua, bgcolor=cBlack>;
+        }
+        int center_26;
+        local int sizeremaining = (locsaver + center_ReadableData) - FTell();
+        for( i = 0; i < (sizeremaining /4) ; i++ ){
+            float readfloat2<fgcolor=cAqua, bgcolor=cBlack>;
+        }
+    }
+    if (center_1Controler1 == 2){
+    short center_9a<fgcolor=cGreen, bgcolor=cBlack>;
+    short center_9b<fgcolor=cGreen, bgcolor=cBlack>;
+    int center_10;
+    short center_11a;
+    short center_11b;
+    float center_12;
+    short center_13a;
+    short center_13b;
+    float center_14;
+    float center_15;
+    float center_16;
+    local int sizeremaining = (locsaver + center_ReadableData) - FTell();
+        for( i = 0; i < (sizeremaining / 4) ; i++ ){
+            float readfloat<fgcolor=cGreen, bgcolor=cBlack>;
+        }
+    int dummy1;
+    int dummy2;
+    int dummy3;
+    int sizeread16sleft<fgcolor=cRed, bgcolor=cBlack>;
+        for( i = 0; i < sizeread16sleft; i++ ){
+        float remaingfloat1<fgcolor=cYellow, bgcolor=cBlack>;
+        float remaingfloat2<fgcolor=cYellow, bgcolor=cBlack>;
+        float remaingfloat3<fgcolor=cYellow, bgcolor=cBlack>;
+        float remaingfloat4<fgcolor=cYellow, bgcolor=cBlack>;
+        }
+    }
+    if (center_1Controler1 == 0){
+    int center_9<fgcolor=cYellow, bgcolor=cBlack>;
+    int center_10;
+    short center_11a;
+    short center_11b;
+    float center_12;
+    local int sizeremaining = (locsaver + center_ReadableData) - FTell();
+    for( i = 0; i < (sizeremaining / 4) ; i++ ){
+        float readfloat<fgcolor=cGreen, bgcolor=cBlack>;
+    }
+    int dummy1;
+    int dummy2;
+    int dummy3;
+    int sizeread16sleft<fgcolor=cRed, bgcolor=cBlack>;
+        for( i = 0; i < sizeread16sleft; i++ ){
+        float remaingfloat1<fgcolor=cYellow, bgcolor=cBlack>;
+        float remaingfloat2<fgcolor=cYellow, bgcolor=cBlack>;
+        float remaingfloat3<fgcolor=cYellow, bgcolor=cBlack>;
+        float remaingfloat4<fgcolor=cYellow, bgcolor=cBlack>;
+        }
+    }
+}Sec3Center<open=true>;

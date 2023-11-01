@@ -1,0 +1,104 @@
+//------------------------------------------------
+//--- 010 Editor v9.1.0 Binary Template
+//
+//      File: XL20.bt
+//   Authors: Yretenai
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Data
+// File Mask: mst_enemy_ability.bin
+//  ID Bytes: 58 4C 14 00
+//   History:
+//   1.0    2020-06-26  Yretenai: Initial File
+//------------------------------------------------
+
+LittleEndian();
+local int cGrayZone = 0xd9dadc;
+
+local int cOrange = 0xaae3f9;
+
+local int Red = 0x4C0000;
+
+// !! ADD STRUCT DATA HERE
+// See DFFOO subdir
+typedef struct XL20STRUCT {
+	int id;
+	byte ability_id;
+	byte hit_count;
+	short anim_call;
+	int enemy_id;
+	int command_id;
+	short voice_frame_;
+    long voice_id_;
+    int hit_frame1;
+    int hit_frame2;
+    int hit_frame3;
+    int hit_frame4;
+    int hit_frame5;
+    int hit_frame6;
+    int hit_frame7;
+    int hit_frame8;
+    int hit_frame9;
+    int hit_frame10;
+    int hit_frame11;
+    int hit_frame12;
+    int hit_frame13;
+    int hit_frame14;
+    int hit_frame15;
+    int hit_frame16;
+    int hit_frame17;
+    int hit_frame18;
+    int hit_frame19;
+    int hit_frame20;
+    int hit_frame21;
+    int hit_frame22;
+    int hit_frame23;
+    int hit_frame24;
+    int hit_frame25;
+    int hit_frame26;
+    int hit_frame27;
+    int hit_frame28;
+    int hit_frame29;
+    int hit_frame30;
+	int hit_data1;
+	int hit_data2;
+	int hit_data3;
+	int hit_data4;
+	int hit_data5;
+	int hit_data6;
+	int hit_data7;
+	int hit_data8;
+	int hit_data9;
+	int hit_data10;
+	int hit_data11;
+	int hit_data12;
+	int hit_data13;
+	int hit_data14;
+	int hit_data15;
+	int hit_data16;
+	int hit_data17;
+	int hit_data18;
+	int hit_data19;
+	int hit_data20;
+	int hit_data21;
+	int hit_data22;
+	int hit_data23;
+	int hit_data24;
+	int hit_data25;
+	int hit_data26;
+	int hit_data27;
+	int hit_data28;
+	int hit_data29;
+	int hit_data30;
+    short group_;
+    short rank_;
+} XL20Struct;
+
+struct XL20 {
+    ushort magic<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x14">;
+    int count<name="Count">;
+    int max_size<name="Max Size", comment="Not per se actual max size, defines how much memory to allocate to deserialize. Usually aligned to 8 or 16 bytes.">;
+    int start<name="Start Pointer">;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

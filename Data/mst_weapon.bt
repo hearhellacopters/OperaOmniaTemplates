@@ -1,0 +1,78 @@
+//------------------------------------------------
+//--- 010 Editor v9.1.0 Binary Template
+//
+//      File: XL20.bt
+//   Authors: Yretenai
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Data
+// File Mask: mst_weapon.bin
+//  ID Bytes: 58 4C 14 00
+//   History:
+//   1.0    2020-06-26  Yretenai: Initial File
+//------------------------------------------------
+
+LittleEndian();
+
+
+typedef struct XL20STRING {
+    int size<name="Length">;
+    char text[size]<name="Text">;
+} XL20String;
+
+typedef struct XL20DATE {
+    char text[0x40]<name="Text">;
+} XL20Date;
+
+typedef struct XL20NAME {
+    char text[0x80]<name="Text">;
+} XL20Name;
+
+// !! ADD STRUCT DATA HERE
+// See DFFOO subdir
+typedef struct XL20STRUCT {
+    int equip_id; 
+    int equip_type_id;
+    int still_id;
+    int type_detail_id;
+    int series_id;
+    int chara_id;
+    int private_chara_id;
+    int skill_id;
+    int cp;
+    int model_id;
+    int rarity;
+    byte max_limit_over_num;
+    int max_hp;
+    int max_brv;
+    int def_brv;
+    int atk;
+    int def;
+    int spd;
+    int default_cp;
+    int brv_se;
+    int hp_se;
+    byte gacha_and_drop;
+    XL20Name start<name="Name">;
+    byte is_skin;
+    int sort_num;
+    int multi_passive;
+    int equip_grow_type;
+    int ex_skill_id;
+    int ex_slot_key;
+    int model_type;
+    int others_category;
+    byte equipable_type;
+    int decoration_skin_type;
+    int maximum_item_id;
+    XL20DATE start<name="start_date">;
+} XL20Struct;
+
+struct XL20 {
+    ushort magic<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x14">;
+    int count<name="Count">;
+    int max_size<name="Max Size", comment="Not per se actual max size, defines how much memory to allocate to deserialize. Usually aligned to 8 or 16 bytes.">;
+    int start<name="Start Pointer">;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

@@ -1,0 +1,152 @@
+//------------------------------------------------
+//--- 010 Editor v10.0.2 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: battle_event_****.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+#include "char_id.h"
+#include "unit.h"
+
+typedef enum <int>{
+    True =  14910000,
+    False = 39210000,
+} ANSWER;
+
+typedef enum <int> {
+    None = -1,
+    BlackenedWillPartyDead2 = 2,
+    BlackenedWill3 = 3,
+    Tutorial4 = 4,
+    Tutorial7 = 7,
+    Tutorial5 = 5,
+    EnterChara6 = 6,
+    BattleHold8 = 8, 
+    Pause9 = 9,
+    Tutorial10 = 10,
+    Tutorial11 = 11,
+    Tutorial12 = 12,
+    Tutorial13 = 13,
+    Tutorial14 = 14,
+    Tutorial15 = 15,
+    Tutorial16 = 16,
+    Tutorial17 = 17,
+    Tutorial18 = 18,
+    BlackenedWill20 = 20,
+    ReviveTeam21 = 21,
+    BlackenedWill22 = 22,
+    BlackenedWill23 = 23,
+    BlackenedWill24 = 24,
+    ChooseQuestion25 = 25,
+    Question26 = 26,
+    ChooseQuestion27 = 27,
+    Tutorial28 = 28,
+    Tutorial29 = 29,
+    Tutorial30 = 30,
+    Tutorial31 = 31,
+    OnionWOLActThree32 = 32
+} ACTION;
+
+typedef enum <int> {
+    BattleStart = 1,
+    Tutorial4_ = 4,
+    WaveEnd = 5,
+    NextWaveStart = 6,
+    EnemyAnim = 7,
+    EnemyCond = 10,  
+} FLAG1;
+
+typedef struct  {
+    int type;
+    ACTION battle_type;
+    switch (battle_type){
+        case EnterChara6:
+            int position; //starts at 0
+            int test1<hidden=true>;
+            local CHARID char_id = (CHARID) (test1 % 10000);
+            if(test1>9999){
+                 local float sub_id = (test1  % 100000) / 10000;
+            }
+            int UNK5;
+            int UNK6;
+            break;
+        case BattleHold8:
+            FLAG1 cond;
+            switch (cond){
+                case EnemyCond:
+                    int enemy_id;
+                    int cond_id;
+                    break;
+                default:
+                    int value1;
+                    int value2;
+                    break;
+            }
+            int UNK6;
+            break;
+        case Pause9:
+            int pause;
+            int UNK4;
+            int UNK5;
+            int UNK6;
+            break;
+        case ChooseQuestion25:
+            int ofthenext;
+            int choose_amnt;
+            int UNK5;
+            int UNK6;
+            break;
+        case Question26:
+            ANSWER answer;
+            int UNK4;
+            int UNK5;
+            int UNK6;
+            break;
+        case ChooseQuestion27:
+            int ofthenext;
+            int choose_amnt;
+            int UNK5;
+            int UNK6;
+            break;
+        default:
+            int UNK3;
+            int UNK4;
+            int UNK5;
+            int UNK6;
+            break;
+    }
+    local int bgm = -1;
+    int test2<hidden=true>;
+    if(test2 > 0){
+        bgm = test2-1;
+    } else {
+        bgm = test2;
+    }
+    int UNK8;
+    int UNK9;
+    char name[64]<name="name">;
+    UNIT stl_image;
+    if(type == 2)
+    {
+        int UNK10;
+    }
+    int AV_index;
+    char text[512]<name="text">;
+} battle_entry;
+
+struct {
+    local int i<hidden=true> = 0;
+    local int count<hidden=true> = FileSize()/620;
+    if(count < 1){
+       count = 1;
+    }
+    for(i; i < count; i++){
+        battle_entry entry<optimize=false, open=true>;
+    }
+} battle_event <open=true>;;

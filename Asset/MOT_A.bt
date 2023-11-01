@@ -1,0 +1,102 @@
+//------------------------------------------------
+//--- 010 Editor v10.0.2 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: MOT_****_A.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct XL20STRUCT {
+    FSkip(8);
+    int test<hidden=true>;
+    if(test == 999){
+        FSkip(-4);
+        int ACT_MOTID1;
+        FSkip(124);
+    } else {
+    FSkip(-12);
+    int DefaultAngle;
+    int TurnAngle;
+    byte TurnAngleB;
+    int ACT_MOTID1;
+    ushort ACT_ENTRY2;
+    ubyte NextMotFloat;
+    ubyte AttackInRotFrame;
+    ubyte AttackOutRotFrame;
+    byte UNK7b;
+    byte UNK8a;
+    byte UNK8b;
+    int WpnMot1;
+    int WpnMot2;
+    byte UNK13a;
+    byte UNK13b;
+    short UNK14;
+    byte UNK15a;
+    byte UNK15b;
+    short UNK16;
+    short UNK17;
+    short UNK18;
+    byte UNK19a;
+    byte UNK19b;
+    byte UNK20a;
+    byte UNK20b;
+    byte UNK21a;
+    byte CameraFlag;
+    ushort NextMotion;
+    ushort FrameMax; 
+    ushort VSyncFrame;
+    byte UNK25a;
+    byte UNK25b;
+    short UNK26;
+    short CameraID1;
+    short CameraID2;
+    short CameraID3;
+    short UNK30;
+    short NextMotFloat3;
+    short NextMotFloat2;
+    int UNK33;
+    short AniFrameRef1_1;
+    short AniFrameRef1_2;
+    short AniFrameRef1_3;
+    short AniFrameRef1_4;
+    short AniFrameRef2_1;
+    short AniFrameRef2_2;
+    short AniFrameRef2_3;
+    short AniFrameRef2_4;
+    short AniFrameRef3_1;
+    short AniFrameRef3_2;
+    short AniFrameRef3_3;
+    short AniFrameRef3_4;
+    short AniFrameRef4_1;
+    short AniFrameRef4_2;
+    short AniFrameRef4_3;
+    short AniFrameRef4_4;
+    short AniFrameVal1_1;
+    short AniFrameVal1_2;
+    short AniFrameVal1_3;
+    short AniFrameVal1_4;
+    short AniFrameVal2_1;
+    short AniFrameVal2_2;
+    short AniFrameVal2_3;
+    short AniFrameVal2_4;
+    short AniFrameVal3_1;
+    short AniFrameVal3_2;
+    short AniFrameVal3_3;
+    short AniFrameVal3_4;
+    short AniFrameVal4_1;
+    short AniFrameVal4_2;
+    short AniFrameVal4_3;
+    short AniFrameVal4_4;
+    }
+} XL20Struct;
+
+struct XL20 {
+    local int size = FileSize();
+    size = (size - 4) / 136;
+    XL20Struct entries[size]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

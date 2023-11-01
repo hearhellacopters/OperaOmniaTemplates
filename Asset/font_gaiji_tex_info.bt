@@ -1,0 +1,154 @@
+//------------------------------------------------
+//--- 010 Editor v12.0.1 Binary Template
+//
+//      File: font_gaiji_tex_info.bin
+//   Authors: HearHellacopters
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Asset
+// File Mask: font_gaiji_tex_info.bin
+//  ID Bytes: 
+//   History: 
+//   1.0     HearHellacopters: created file
+//------------------------------------------------
+
+string MachineStatusComment( int d){
+        if( d>469 ) {
+            local char new<hidden=true> = d-470+97;
+            return Str("\\\\bZ%c", new);
+            break;
+        };
+        if( d>443 ) {
+            local char new<hidden=true> = d-444+65;
+            return Str("\\\\bZ%c", new);
+            break;
+        };
+        if( d>433 ) {
+            local int new<hidden=true> = d-434;
+            return Str("\\\\bZ%d", new);
+            break;
+        };
+        if( d>407 ) {
+            local char new<hidden=true> = d-408+97;
+            return Str("\\\\bW%c", new);
+            break;
+        };
+        if( d>381 ) {
+            local char new<hidden=true> = d-382+65;
+            return Str("\\\\bW%c", new);
+            break;
+        };
+        if( d>371 ) {
+            local int new<hidden=true> = d-372;
+            return Str("\\\\bW%d", new);
+            break;
+        };
+        if( d>345 ) {
+            local char new<hidden=true> = d-346+97;
+            return Str("\\\\bV%c", new);
+            break;
+        };
+        if( d>319 ) {
+            local char new<hidden=true> = d-320+65;
+            return Str("\\\\bV%c", new);
+            break;
+        };
+        if( d>309 ) {
+            local int new<hidden=true> = d-310;
+            return Str("\\\\bV%d", new);
+            break;
+        };
+        if( d>283 ) {
+            local char new<hidden=true> = d-284+97;
+            return Str("\\\\bU%c", new);
+            break;
+        };
+        if( d>257 ) {
+            local char new<hidden=true> = d-258+65;
+            return Str("\\\\bU%c", new);
+            break;
+        };
+        if( d>247 ) {
+            local int new<hidden=true> = d-248;
+            return Str("\\\\bU%d", new);
+            break;
+        };
+        if( d>221 ) {
+            local char new<hidden=true> = d-222+97;
+            return Str("\\\\bT%c", new);
+            break;
+        };
+        if( d>195 ) {
+            local char new<hidden=true> = d-196+65;
+            return Str("\\\\bT%c", new);
+            break;
+        };
+        if( d>185 ) {
+            local int new<hidden=true> = d-186;
+            return Str("\\\\bT%d", new);
+            break;
+        };
+        if( d>159 ) {
+            local char new<hidden=true> = d-160+97;
+            return Str("\\\\bS%c", new);
+            break;
+        };
+        if( d>133 ) {
+            local char new<hidden=true> = d-134+65;
+            return Str("\\\\bS%c", new);
+            break;
+        };
+        if( d>123 ) {
+            local int new<hidden=true> = d-124;
+            return Str("\\\\bS%d", new);
+            break;
+        }; 
+        if( d>97 ) {
+            local char new<hidden=true> = d-98+97;
+            return Str("\\\\bQ%c", new);
+            break;
+        }; 
+        if( d>71 ) {
+            local char new<hidden=true> = d-72+65;
+            return Str("\\\\bQ%c", new );
+            break;
+        }; 
+        if( d>61 ) {
+            local int new<hidden=true> = d-62;
+            return Str("\\\\bQ%d", new );
+            break;
+        }; 
+        if( d>35 ) {
+            local char new<hidden=true> = d-36+97;
+            return Str("\\\\bP%c", new );
+            break;
+        }; 
+        if( d>9 ) {
+            local char new<hidden=true> = d+55;
+            return Str("\\\\bP%c", new );
+            break;
+        }; 
+        return Str("\\\\bP%d", d );
+        break;
+}
+
+typedef struct STRUCT(int value) {
+    local int value<hidden=true> = value;
+    int x_start;
+    int y_start;
+    int x_width;
+    int y_height;
+    int x_width2;
+    int y_height2;
+	int unkown7;
+    int unkown8;
+} Struct<open=false,name=MachineStatusComment(this.value)>;
+
+struct File {
+    int x_max<name="height of image">;
+    local int64 count<hidden=true> = (FileSize()-4)/32;
+    local int i<hidden=true> = 0;
+    for (i=0;i<count;i++){
+        Struct data(i);
+    }
+} FILE<name="font_gaiji_tex_info", open=true>;

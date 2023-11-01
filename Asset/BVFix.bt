@@ -1,0 +1,35 @@
+//------------------------------------------------
+//--- 010 Editor v14.0 Binary Template
+//
+//      File: BVFix.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: BVFix_xor.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+//xor with hg5jc2hmx9pndj7p9x
+
+typedef struct BVEntry {
+    short data1;
+    short data2;
+    short data3;
+    short data4;
+    short data5;
+    short data6;
+    short data7;
+    short data8;
+    short data9;
+    short data10;
+    short data11;
+    short data12;
+}Entry;
+
+struct BVFix {
+    short entries;
+    short size;
+    BVEntry data[entries+1]<open=true>;
+} BV<open=true>;

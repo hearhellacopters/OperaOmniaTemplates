@@ -1,0 +1,74 @@
+//------------------------------------------------
+//--- 010 Editor v9.1.0 Binary Template
+//
+//      File: XL20.bt
+//   Authors: Yretenai
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Data
+// File Mask: mst_add_param_data.bin
+//  ID Bytes: 58 4C 14 00
+//   History:
+//   1.0    2020-06-26  Yretenai: Initial File
+//------------------------------------------------
+
+LittleEndian();
+
+typedef struct XL20STRING {
+    int size<name="Length">;
+    char text[size]<name="Text">;
+} XL20String;
+
+typedef struct XL20DATE {
+    char text[0x40]<name="Text">;
+} XL20Date;
+
+// !! ADD STRUCT DATA HERE
+// See DFFOO subdir
+typedef struct XL20STRUCT {
+    int id;
+    int atk_value_chara;
+    byte is_atk_value_chara_mul;
+    int def_value_chara;
+    byte is_def_value_chara_mul;
+    int max_hp_value_chara;
+    byte is_max_hp_value_chara_mul;
+    int max_brv_value_chara;
+    byte is_max_brv_value_chara_mul;
+    int start_brv_value_chara;
+    byte is_start_brv_value_chara_mul;
+    int atk_value_equip;
+    byte is_atk_value_equip_mul;
+    int def_value_equip;
+    byte is_def_value_equip_mul;
+    int max_hp_value_equip;
+    byte is_max_hp_value_equip_mul;
+    int max_brv_value_equip;
+    byte is_max_brv_value_equip_mul;
+    int start_brv_value_equip;
+    byte is_start_brv_value_equip_mul;
+	int is_ultimate;
+	int summon_point_rate_chara;
+	int summon_point_rate_member;
+	int id2;
+	int board_point_rate_chara;
+	int board_point_rate_member;
+    byte is_sb_board;
+	int sb_board_point_rate1;
+	int sb_board_point_rate2;
+	int sb_board_point_rate3;
+    byte is_influence;
+    byte is_burst_influence;
+    byte is_spiritus;
+    int spiritus_point_rate;
+    int solo_grind_point_rate;
+} XL20Struct;
+
+struct XL20 {
+    ushort magic<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x14">;
+    int count<name="Count">;
+    int max_size<name="Max Size", comment="Not per se actual max size, defines how much memory to allocate to deserialize. Usually aligned to 8 or 16 bytes.">;
+    int start<name="Start Pointer">;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

@@ -1,0 +1,61 @@
+//------------------------------------------------
+//--- 010 Editor v10.0.2 Binary Template
+//
+//      File: EffAttachData.bt
+//   Authors: Hellacopters
+//   Version: 1.0
+//   Purpose: EffAttachData
+//  Category: OO_Asset
+// File Mask: EffAilmentData127.bin
+//  ID Bytes: 
+//   History:
+//   1.0      2021-08-26  Hellacopters: Made the original file
+//------------------------------------------------
+
+typedef struct {
+    short DevOrder;
+    short end_trigger;
+    short ailment_id;
+    short g1fx;
+    short loop_flag;
+    short se_call;
+    short level_req;
+    short unknown8;
+    short unknown9;
+    byte unknown10a;
+    byte unknown10b;
+    short unknown11;
+    short unknown12;
+    short unknown13;
+    byte unknown14;
+    byte bone_id;
+    short offset_pos_;
+    short offset_pos__1;
+    short offset_pos__2;
+    ubyte rgb_o;
+    UBYTE rgb_r;
+    UBYTE rgb_g;
+    UBYTE rgb_b;
+}DATA<open=true>;
+
+struct {
+    local int FileSize =  FileSize();
+    local int i<hidden=true> = 0;
+    local int b<hidden=true> = 0;
+    local int fsave<hidden=true> = FTell();
+    local int counter<hidden=true> = 0;
+    int Count;
+    for( i = 0; i < Count; i++ ){
+        int loc;
+        int size;
+        fsave = FTell();
+        if(size != 0){
+        FSeek(loc);
+        counter = size / 38;
+        for( b = 0; b < counter; b++ ){
+            DATA data;
+        }
+        FSeek(fsave);
+        }
+    }
+}AilmentEffData<open=true>;

@@ -1,0 +1,55 @@
+//------------------------------------------------
+//--- 010 Editor v9.1.0 Binary Template
+//
+//      File: XL20.bt
+//   Authors: Yretenai
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Data
+// File Mask: mst_enemy_level.bin
+//  ID Bytes: 58 4C 14 00
+//   History:
+//   1.0    2020-06-26  Yretenai: Initial File
+//------------------------------------------------
+
+LittleEndian();
+local int cGrayZone = 0xd9dadc;
+
+local int cOrange = 0xaae3f9;
+
+local int Red = 0x4C0000;
+
+// !! ADD STRUCT DATA HERE
+// See DFFOO subdir
+typedef struct XL20STRUCT {
+	int Id;
+	int level;
+	int enemy_id;
+	int BaseHP;
+	int BaseINTBRV;
+	int BaseMAXBRV;
+	int BaseATK;
+	int BaseDEF;
+	int BaseSPD;
+	int EXP;
+	int Gil;
+	int command_id1;
+	int command_id2;
+	int command_id3;
+	int command_id4;
+	int command_id5;
+	int command_id6;
+	int command_id7;
+	int command_id8;
+	int command_id9;
+	int command_id10;
+} XL20Struct;
+
+struct XL20 {
+    ushort magic<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x14">;
+    int count<name="Count">;
+    int max_size<name="Max Size", comment="Not per se actual max size, defines how much memory to allocate to deserialize. Usually aligned to 8 or 16 bytes.">;
+    int start<name="Start Pointer">;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

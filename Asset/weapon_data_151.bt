@@ -1,0 +1,46 @@
+//------------------------------------------------
+//--- 010 Editor v10.0.2 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: weapon_data_151.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct XL20STRUCT {
+    int weapon_cat;
+    int duel_flag;
+    int weapon_modtex_1;
+    int weapon_modtex_2;
+    int modtex_2_bone;
+    short g1fx1;
+    short g1fx1_bone;
+    short g1fx2;
+    short g1fx2_bone;
+    short g1fx3;
+    short g1fx3_bone;
+    short g1fx4;
+    short g1fx4_bone;
+    short g1fx5;
+    short g1fx5_bone;
+    short g1fx6;
+    short g1fx6_bone;
+    int weapon_modtex_3;
+    int modtex_3_bone;
+    int weapon_modtex_4;
+    int modtex_4_bone;
+    int weapon_modtex_5;
+    int modtex_5_bone;
+    int weapon_modtex_6;
+    int modtex_6_bone;
+} XL20Struct;
+
+struct XL20 {
+    int count<name="Count">;
+    int dummy1;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

@@ -1,0 +1,25 @@
+//------------------------------------------------
+//--- 010 Editor v11.0 Binary Template
+//
+//      File: ChrModelDataV114.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: ChrModelDataV114.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct {
+    short unit_type;
+    short index_of_each_chara;
+    short data2;
+    short data3;
+}DATA<open=true>;
+
+struct {
+    local int FileSize =  FileSize();
+    local int Entries = FileSize / 8;
+    DATA entries[Entries]<name="Structs", optimize=false>;
+}ChrModelData<open=true>;

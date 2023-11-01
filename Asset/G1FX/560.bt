@@ -1,0 +1,492 @@
+//------------------------------------------------
+//--- 010 Editor v11.0 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: for GT1FX
+//  Category: OO_Asset
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+//readsize
+
+typedef struct {
+    int Read16_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int Read16_2;
+    int Read16_3;
+    int Read16_4;
+} read16<open=true>;
+
+typedef struct {
+    int read20_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int read20_2;
+    int read20_3;
+    int read20_4;
+    float read20_5;
+    int dummy1<hidden=true>;
+    int dummy2<hidden=true>;
+    int dummy3<hidden=true>;
+} read20<open=true>;
+
+typedef struct {
+    int read24_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int read24_2;
+    int read24_3;
+    int read24_4;
+    float read24_5;
+    float read24_8;
+    int dummy1<hidden=true>;
+    int dummy2<hidden=true>;
+} read24<open=true>;
+
+typedef struct {
+    int read32_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int read32_2;
+    int read32_3;
+    int read32_4;
+    int read32_5;
+    int read32_6;
+    int read32_7;
+    float read32_8;
+} read32<open=true>;
+
+typedef struct {
+    int read36_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int read36_2;
+    int read36_3;
+    int read36_4;
+    int read36_5;
+    int read36_6;
+    int read36_7;
+    float read36_7;
+    float read36_8;
+    int dummy1<hidden=true>;
+    int dummy2<hidden=true>;
+    int dummy3<hidden=true>;
+} read36<open=true>;
+
+typedef struct {
+    int Read44_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int Read44_2;
+    int Read44_3;
+    int Read44_4;
+    int Read44_5;
+    int Read44_6;
+    int Read44_7;
+    int Read44_8;
+    int Read44_9;
+    int Read44_10;
+    int Read44_11;
+    int dummy<hidden=true>;
+} read44<open=true>;
+
+typedef struct {
+    int Read48_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int Read48_2;
+    int Read48_3;
+    int Read48_4;
+    int Read48_5;
+    int Read48_6;
+    float Read48_7;
+    int Read48_8;
+    int Read48_9;
+    float Read48_10;
+    int Read48_11;
+    int Read48_12;
+} read48<open=true>;
+
+typedef struct {
+    int Read64_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int Read64_2;
+    int Read64_3;
+    int Read64_4;
+    int Read64_5;
+    int Read64_6;
+    int Read64_7;
+    float Read64_8;
+    int Read64_9;
+    int Read64_10;
+    int Read64_11;
+    int Read64_12;
+    float Read64_13;
+    float Read64_14;
+    float Read64_15;
+    float Read64_16;
+} read64<open=true>;
+
+typedef struct {
+    int read80_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int read80_2;
+    int read80_3;
+    int read80_4;
+    float read80_5;
+    float read80_6;
+    float read80_7;
+    float read80_8;
+    float read80_9;
+    float read80_10;
+    float read80_11;
+    float read80_12;
+    float read80_13;
+    float read80_14;
+    float read80_15;
+    float read80_16;
+    float read80_17;
+    float read80_18;
+    float read80_19;
+    float read80_20;
+} read80<open=true>;
+
+typedef struct { // 96 likly wrong
+    int read96_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int read96_2;
+    int read96_3;
+    int read96_4;
+    int read96_5;
+    int read96_6;
+    int read96_7;
+    int read96_8;
+    float read96_9;
+    float read96_10;
+    float read96_11;
+    float read96_12;
+    float read96_13;
+    float read96_14;
+    float read96_15;
+    float read96_16;
+    float read96_17;
+    float read96_18;
+    float read96_19;
+    float read96_20;
+    float read96_21;
+    float read96_22;
+    float read96_23;
+    float read96_24;
+} read96<open=true>;
+
+typedef struct {
+    int read112_1<fgcolor=cAqua, bgcolor=cBlack>;
+    int read112_2;
+    int read112_3;
+    int read112_4;
+    float read112_5;
+    int read112_6;
+    int read112_7;
+    int read112_8;
+    int read112_9;
+    float read112_10;
+    int read112_11;
+    int read112_12;
+    int read112_13;
+    int read112_14;
+    float read112_15;
+    int read112_16;
+    int read112_17;
+    int read112_18;
+    float read112_19;
+    float read112_20;
+    float read112_21;
+    float read112_22;
+    float read112_23;
+    float read112_24;
+    float read112_25;
+    float read112_26;
+    float read112_27;
+    float read112_28;
+} read112<open=true>;
+
+typedef struct { //likely wrong
+    int read128_1<fgcolor=cAqua, bgcolor=cBlack>;
+    float read128_2;
+    float read128_3;
+    float read128_4;
+    float read128_5;
+    float read128_6;
+    float read128_7;
+    float read128_8;
+    float read128_9;
+    float read128_10;
+    float read128_11;
+    float read128_12;
+    float read128_13;
+    float read128_14;
+    float read128_15;
+    float read128_16;
+    float read128_17;
+    float read128_18;
+    float read128_19;
+    float read128_20;
+    float read128_21;
+    float read128_22;
+    float read128_23;
+    float read128_24;
+    float read128_25;
+    float read128_26;
+    float read128_27;
+    float read128_28;
+    float read128_29;
+    float read128_30;
+    float read128_31;
+    float read128_32;
+} read128<open=true>;
+
+typedef struct {
+    int read144_1Size<fgcolor=cRed, bgcolor=cBlack>;
+    int read144_1ExtRef1<fgcolor=cPurple, bgcolor=cWhite>;
+    int read144_1ExtRef2<fgcolor=cPurple, bgcolor=cWhite>;
+    int read144_1ExtRef3<fgcolor=cPurple, bgcolor=cWhite>;
+    read80 data;
+    read48 data;
+} read144<open=true, fgcolor=cAqua, bgcolor=cBlack>;
+
+typedef struct {
+    long read496_1<fgcolor=cBlack, bgcolor=cWhite>;
+    long read496_2;
+    float read496_3;
+    float read496_4;
+    float read496_5;
+    float read496_6;
+    float read496_7;
+    float read496_8;
+    float read496_9;
+    float read496_10;
+    float read496_11;
+    float read496_12;
+    float read496_13;
+    float read496_14;
+    float read496_15;
+    float read496_16;
+    float read496_17;
+    float read496_18;
+    float read496_19;
+    float read496_20;
+    float read496_21;
+    float read496_22;
+    float read496_23;
+    float read496_24;
+    float read496_25;
+    float read496_26;
+    float read496_27;
+    float read496_28;
+    int read496_29Header1;
+    int read496_30Header2;
+    int read496_31Header3;
+} read496<open=true, fgcolor=cYellow, bgcolor=cBlack>;
+
+void reader() {
+    local int locsaver<hidden=true> = FTell();
+    int readsize<hidden=true>;
+    FSeek(locsaver);
+    if(readsize == 16){
+       read16 data;
+    }
+    if(readsize == 20){
+       read20 data;
+    }
+    if(readsize == 24){
+       read24 data;
+    }
+    if(readsize == 32){
+       read32 data;
+    }
+    if(readsize == 36){
+       read36 data;
+    }
+    if(readsize == 44){
+       read44 data;
+    }
+    if(readsize == 48){
+       read48 data;
+    }
+    if(readsize == 64){
+       read64 data;
+    }
+    if(readsize == 80){
+       read80 data;
+    }
+    if(readsize == 76){
+       read76 data;
+    }
+    if(readsize == 92){
+        readloc();
+        readloc();
+        readloc();
+    }
+    if(readsize == 112){
+        read112 data;
+    }
+    if(readsize == 128){
+        read128 data;
+    }
+    if(readsize == 96){
+       read96 data;
+    }
+    if(readsize == 144){
+       read144 data;
+    }
+    if(readsize == 496){
+        read496 data;
+    }
+}
+
+void readloc() {
+    local int locsaver<hidden=true> = FTell();
+    local int jump =0;
+    int locread<fgcolor=cRed, bgcolor=cBlack>;
+    local int returnloc<hidden=true> = FTell();
+    jump = locsaver + locread;
+    FSeek(jump);
+    reader();
+    FSeek(returnloc);
+}
+
+struct {
+    int readprime_0size<comment="580", fgcolor=cBlack, bgcolor=cWhite>;
+    long readprime_1<comment="496", fgcolor=cBlack, bgcolor=cWhite>;
+    long readprime_2<comment="0">;
+    float readprime_3<comment="1">;
+    float readprime_4<comment="1">;
+    float readprime_5<comment="1">;
+    float readprime_6<comment="1">;
+    float readprime_7<comment="1">;
+    float readprime_8<comment="1">;
+    float readprime_9<comment="1">;
+    float readprime_10<comment="1">;
+    float readprime_11<comment="1">;
+    float readprime_12<comment="1">;
+    float readprime_13<comment="1">;
+    float readprime_14<comment="1">;
+    float readprime_15<comment="1">;
+    float readprime_16<comment="1">;
+    float readprime_17<comment="1">;
+    float readprime_18<comment="1">;
+    float readprime_19<comment="1">;
+    float readprime_20<comment="1">;
+    float readprime_21<comment="1">;
+    float readprime_22<comment="1">;
+    float readprime_23<comment="1">;
+    float readprime_24<comment="1">;
+    float readprime_25<comment="1">;
+    float readprime_26<comment="1">;
+    float readprime_27<comment="1">;
+    float readprime_28<comment="1">;
+    int readprime_29Meta1<comment="0">;
+    local int i<hidden=true> = 0;
+    int readprime_30ExtentAmount1<fgcolor=cBlue, bgcolor=cWhite>;
+    int readprime_31InteralAmount1<fgcolor=cBlue, bgcolor=cWhite>;
+    readloc();
+    short readprime_32a;
+    short readprime_32b;
+    local int saver<hidden=true> = FTell();
+    int readprime_33Loc;
+    FSeek(saver + readprime_33Loc);
+    for( i = 0; i < readprime_30ExtentAmount1; i++ ){
+    int readprime_Extenal;
+    }
+    FSeek(saver+4);
+    short readprime_34a;
+    short readprime_34b;
+    local int cur<hidden=true> = FTell();
+    int readprime_33InteralRef<fgcolor=cPurple, bgcolor=cWhite>;
+    local int returnto<hidden=true> = FTell();
+    cur = cur + readprime_33InteralRef;
+    FSeek(cur);
+    readloc();
+    FSeek(returnto);
+    short readprime_36a;
+    short readprime_36b;
+    readloc();
+    short readprime_38a;
+    short readprime_38b;
+    readloc();
+    short readprime_40a;
+    short readprime_40b;
+    readloc();
+    short readprime_42a;
+    short readprime_42b;
+    readloc();
+    short readprime_44a;
+    short readprime_44b;
+    readloc();
+    short readprime_46a;
+    short readprime_46b;
+    readloc();
+    short readprime_48a;
+    short readprime_48b;
+    readloc();
+    short readprime_50a;
+    short readprime_50b;
+    readloc();
+    short readprime_52a;
+    short readprime_52b;
+    readloc();
+    short readprime_54a;
+    short readprime_54b;
+    readloc();
+    short readprime_56a;
+    short readprime_56b;
+    readloc();
+    short readprime_58a;
+    short readprime_58b;
+    readloc();
+    short readprime_60a;
+    short readprime_60b;
+    readloc();
+    short readprime_62a;
+    short readprime_62b;
+    readloc();
+    short readprime_64a;
+    short readprime_64b;
+    readloc();
+    short readprime_66a;
+    short readprime_66b;
+    readloc();
+    short readprime_68a;
+    short readprime_68b;
+    readloc();
+    short readprime_70a;
+    short readprime_70b;
+    readloc();
+    short readprime_72a;
+    short readprime_72b;
+    readloc();
+    short readprime_74a;
+    short readprime_74b;
+    readloc();
+    short readprime_76a;
+    short readprime_76b;
+    readloc();
+    short readprime_78a;
+    short readprime_78b;
+    readloc();
+    short readprime_80a;
+    short readprime_80b;
+    readloc();
+    short readprime_82a;
+    short readprime_82b;
+    readloc();
+    short readprime_84a;
+    short readprime_84b;
+    readloc();
+    short readprime_86a;
+    short readprime_86b;
+    readloc();
+    short readprime_88a;
+    short readprime_88b;
+    readloc();
+    short readprime_90a;
+    short readprime_90b;
+    readloc();
+    short readprime_92a;
+    short readprime_92b;
+    readloc();
+    short readprime_94a;
+    short readprime_94b;
+    readloc();
+    short readprime_96a;
+    short readprime_96b;
+    int readprime_97Meta;
+    int readprime_98Meta;
+} read560<open=true,fgcolor=cPurple, bgcolor=cBlack>;

@@ -1,0 +1,31 @@
+//------------------------------------------------
+//--- 010 Editor v11.0 Binary Template
+//
+//      File: CharacterFeatureType_zor.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: CharacterFeatureType_xor.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+//xor with aGc1amMyaG14OXBuZGo3cDl4
+
+typedef struct {
+    short unknown1;
+    short unknown2;
+    short unknown3;
+    short unknown4;
+}DATA<open=false>;
+
+struct {
+    short count;
+    short size;
+    local int i = 0;
+    while(count != i){
+        DATA data;
+        i = i + 1;
+    }    
+} CharacterFeature<open=true>;

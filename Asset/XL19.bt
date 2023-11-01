@@ -1,0 +1,89 @@
+//------------------------------------------------
+//--- 010 Editor v9.1.0 Binary Template
+//
+//      File: XL19.bt
+//   Authors: Hellacopters
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Asset
+// File Mask: *.bin
+//  ID Bytes: 58 4C 13 00
+//   History:
+//   1.0    2020-06-26  Hellacopters: Initial File
+//------------------------------------------------
+
+LittleEndian();
+
+typedef struct XL19STRUCT(int WIDTH, int SETS, int TABLEOFFSET, int return_to) {
+    local int x<hidden=true> = 0;
+    local int set_loc<hidden=true> = 16;
+    local int loctrack<hidden=true> = FTell();
+    for( x = 0; x < SETS; x++ ){;
+        FSeek(set_loc);
+        byte ReadType<hidden=true>;
+        set_loc = FTell();
+        FSeek(return_to);
+        switch(ReadType){
+            case 0:
+                int loc<hidden=true>;
+                loctrack = FTell();
+                FSeek(TABLEOFFSET+loc);
+                struct (){
+                    string text0_;
+                } Name;
+                return_to = loctrack;
+                break;
+            case 1:
+                int data1;
+                return_to = FTell();
+                break;
+            case 2:
+                short data2;
+                return_to = FTell();
+                break;
+            case 3:
+                byte data3;
+                return_to = FTell();
+                break;
+            case 4:
+                ulong data4;
+                return_to = FTell();
+                break;
+            case 5:
+                ushort data5;
+                return_to = FTell();
+                break;
+            case 6:
+                ubyte data6;
+                return_to = FTell();
+                break;
+            case 7:
+                float data7;
+                return_to = FTell();
+                break;
+            default:
+                break;
+        }
+        FSeek(set_loc);
+    }
+    FSeek(return_to);
+} XL19Struct;
+
+struct XL19 {
+    char magic[2]<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x13">;
+    ushort FILESIZE;;
+	ushort SETS;
+    ushort ENTRIES;
+	ushort WIDTH;
+	short TABLEOFFSET;
+	short unknown1;
+    local int i<hidden=true> = 0;
+    local int z<hidden=true> = 0;
+    local int return_to<hidden=true> = TABLEOFFSET;
+    for( i = 0; i < ENTRIES; i++ ){
+        FSeek(16);
+        XL19Struct entry(WIDTH,SETS,TABLEOFFSET,return_to)<open=true>;
+        return_to = FTell();
+    }
+} XL<name="XL19", open=true>;

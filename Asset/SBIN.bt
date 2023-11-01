@@ -1,0 +1,266 @@
+//------------------------------------------------
+//--- 010 Editor v10.0.2 Binary Template
+//
+//      File: sbin or .sab
+//   Authors: Hellacopters
+//   Version: 1
+//   Purpose: Understanding Opera Omina Sounds Packs
+//  Category: OO_Asset
+// File Mask: *.sbin
+//  ID Bytes: 73 61 62 66
+//   History: 1.0 - Satrted file
+//------------------------------------------------
+
+void Align(int n) {
+    local int value = FTell() % n;
+
+    if (value) {
+        FSkip(n - value);
+    }
+}
+
+typedef struct FOURCHAR {
+    char text[4]<name="Text">;
+} Magic;
+
+typedef struct SBIN_HEADER {
+    LittleEndian();
+    char text[4]<name="Magic">;
+    byte version<name="VersionMain", comment="2">;
+    byte versionsub<name="VersionSub">;
+    ushort endianess<name="Endianess", comment="16 = big">;
+    byte SectionsCount<name="SectionsCount">;
+    byte DescriptorLength<name="DescriptorLength">;
+    ushort UnknownAtA;
+    int FileSize<name="FileSize">;
+    local int HeaderSize = 16 + DescriptorLength + (16 - DescriptorLength % 16);
+    string filename<name="filename", bgcolor=cRed, fgcolor=cWhite>;
+    Align(16);
+} SBINHeader;
+
+typedef struct SND_SEC {
+    LittleEndian();
+    char text[4]<name="snd", bgcolor=cYellow, fgcolor=cBlack>;
+    FSkip(2);
+    ushort SndAddressesSize;
+    uint SndOffset<bgcolor=cYellow, fgcolor=cBlack>;
+    Align(SndAddressesSize);
+} SNDSec;
+
+typedef struct SEQ_SEC {
+    LittleEndian();
+    char text[4]<name="seq", bgcolor=cBlue, fgcolor=cWhite>;
+    FSkip(2);
+    ushort SeqAddressesSize;
+    uint SeqOffset<bgcolor=cBlue, fgcolor=cWhite>;
+    Align(SeqAddressesSize);
+} SEQSec;
+
+typedef struct TRK_SEC {
+    LittleEndian();
+    char text[4]<name="trk", bgcolor=cGreen, fgcolor=cWhite>;
+    FSkip(2);
+    ushort TrkAddressesSize;
+    uint TrkOffset<bgcolor=cGreen, fgcolor=cWhite>;
+    Align(TrkAddressesSize);
+} TRKSec;
+
+typedef struct MTRL_SEC {
+    LittleEndian();
+    char text[4]<name="mtrl", bgcolor=cWhite, fgcolor=cBlack>;
+    FSkip(2);
+    ushort MtrlAddressesSize;
+    uint MtrlOffset<bgcolor=cWhite, fgcolor=cBlack>;
+    Align(MtrlAddressesSize);
+} MTRLSec;
+
+enum<byte> CODEC
+{
+    UNKNOWN,
+    PCM,
+    MSADPCM, 
+    OGGVorbis,
+    ATRAC9,
+    XMA2,
+    MSMP3,
+    HCA,
+    SWITCHOPUS
+};
+
+struct {
+    LittleEndian();
+    SBINHeader header<name="Header">;
+    SNDSec SND<name="snd">;
+    SEQSec SEQ<name="seq">;
+    TRKSec TRK<name="trk">;
+    MTRLSec MTRL<name="mtrl">;
+    //snd sections
+    FSeek((int)SND.SndOffset);
+    local int SndReturn = FTell();
+    FSkip(2);
+    ushort SndAddressesSize;
+    ushort Sndcount <bgcolor=cYellow, fgcolor=cBlack>;
+    Align(SndAddressesSize);
+    int SndLoc[Sndcount] <bgcolor=cYellow, fgcolor=cBlack>;
+    Align(SndAddressesSize);
+    local int i<hidden=true> = 0;
+    for ( i = 0; i < Sndcount; i++ ) {
+        struct SND_READ {
+            FSeek(SndLoc[i] + SndReturn);
+            local int locsnd_offset<hidden=false> = SndLoc[i] + SndReturn;
+            ubyte snd_version <bgcolor=cYellow, fgcolor=cBlack>;
+            ubyte snd_work <bgcolor=cYellow, fgcolor=cBlack>;
+            ushort snd_size <bgcolor=cYellow, fgcolor=cBlack>;
+            ubyte snd_type <bgcolor=cYellow, fgcolor=cBlack>;
+            ubyte seqi_count <bgcolor=cYellow, fgcolor=cBlack>;
+            ubyte snd_category <bgcolor=cYellow, fgcolor=cBlack>;
+            ubyte snd_priority <bgcolor=cYellow, fgcolor=cBlack>;
+            ushort snd_number <bgcolor=cYellow, fgcolor=cBlack>;
+            ushort snd_start_end_macro <bgcolor=cYellow, fgcolor=cBlack>;
+            uint snd_volume <bgcolor=cYellow, fgcolor=cBlack>;
+            uint snd_cycle_config <bgcolor=cYellow, fgcolor=cBlack>;
+            FSkip(4);
+            ushort snd_header_size <bgcolor=cYellow, fgcolor=cBlack>;
+            ushort seqi_start <bgcolor=cYellow, fgcolor=cBlack>;
+            uint seqi_audible_range <bgcolor=cYellow, fgcolor=cBlack>;
+            ubyte output <bgcolor=cYellow, fgcolor=cBlack>;
+            ubyte curve <bgcolor=cYellow, fgcolor=cBlack>;
+            ubyte port <bgcolor=cYellow, fgcolor=cBlack>;
+            if (snd_version <= 8) { 
+                local int sndname_size<bgcolor=cYellow, fgcolor=cBlack> = 15;
+                local int sndname_offset = locsnd_offset + 80;
+            } else {
+                ubyte sndname_size<bgcolor=cYellow, fgcolor=cBlack>;
+                local int sndname_offset = locsnd_offset + snd_size;
+                uint play_length <bgcolor=cYellow, fgcolor=cBlack>;
+            }
+            FSeek(sndname_offset);
+		    char name[sndname_size] <bgcolor=cYellow, fgcolor=cBlack>;
+            local int j<hidden=true> = 0;
+            FSeek(locsnd_offset);
+            FSkip(seqi_start);
+            for ( j = 0; j < seqi_count; j++ ) {
+                ubyte seqi_version <bgcolor=cYellow, fgcolor=cBlack>;
+                ubyte seqi_reserved1 <bgcolor=cYellow, fgcolor=cBlack>;
+                ushort seqi_size<bgcolor=cYellow, fgcolor=cBlack>;
+                ushort seq_index<bgcolor=cYellow, fgcolor=cBlack>;
+                ushort seqi_ID <bgcolor=cYellow, fgcolor=cBlack>;
+                ubyte seqi_reserved1 <bgcolor=cYellow, fgcolor=cBlack>;
+                ubyte seqi_reserved2 <bgcolor=cYellow, fgcolor=cBlack>;
+                FSkip(6);
+            }
+        } Snd_READ <open=false>;
+    }
+    //seq section
+    FSeek((int)SEQ.SeqOffset);
+    local int SeqReturn = FTell();
+    FSkip(2);
+    ushort SeqAddressesSize;
+    ushort Seqcount <bgcolor=cBlue, fgcolor=cWhite>;
+    Align(SeqAddressesSize);
+    int SeqLoc[Seqcount] <bgcolor=cBlue, fgcolor=cWhite>;
+    Align(SeqAddressesSize);
+    local int h<hidden=true> = 0;
+    for ( h = 0; h < Seqcount; h++ ) {
+        struct SEQ_READ {
+            FSeek(SeqLoc[h] + SeqReturn);
+            local int locseq_offset<hidden=false> = SeqLoc[h] + SeqReturn;
+            ubyte seq_version<bgcolor=cBlue, fgcolor=cWhite>;
+            ubyte seq_reserved<bgcolor=cBlue, fgcolor=cWhite>;
+            ushort sect_size<bgcolor=cBlue, fgcolor=cWhite>;
+            if (seq_version <= 2) {
+                uint config_depending_on_type <bgcolor=cBlue, fgcolor=cWhite>;
+                FSkip(8);
+                ushort seq_number <bgcolor=cBlue, fgcolor=cWhite>;
+                ushort volume_zero_one_offsets <bgcolor=cBlue, fgcolor=cWhite>;
+                ushort pitch_zero_one_offsets <bgcolor=cBlue, fgcolor=cWhite>;
+                ushort cmnd_start <bgcolor=cBlue, fgcolor=cWhite>;
+                ubyte reserved1 <bgcolor=cBlue, fgcolor=cWhite>;
+                ubyte reserved2 <bgcolor=cBlue, fgcolor=cWhite>;
+                local int sectname_offset = 48;
+                local int sectname_size = 15;
+            } else {
+                ushort seq_id<bgcolor=cBlue, fgcolor=cWhite>;
+                ushort cmnd_start<bgcolor=cBlue, fgcolor=cWhite>;
+                ubyte zero_ones_count <bgcolor=cBlue, fgcolor=cWhite>;
+                ubyte reserved1 <bgcolor=cBlue, fgcolor=cWhite>;
+                FSkip(6);
+                uint config_depending_on_type <bgcolor=cBlue, fgcolor=cWhite>;
+                local int sectname_offset = (SeqLoc[h] + SeqReturn) + sect_size;
+            }
+            FSeek(locseq_offset);
+            FSkip(cmnd_start);
+            ubyte cmnd_version <bgcolor=cBlue, fgcolor=cWhite>;
+            ubyte cmnd_size<bgcolor=cBlue, fgcolor=cWhite>;
+            ubyte cmnd_type<bgcolor=cBlue, fgcolor=cWhite>;
+            ubyte cmnd_body<bgcolor=cBlue, fgcolor=cWhite>;
+            if (cmnd_type == 2) {
+                FSeek(locseq_offset);
+                FSkip(cmnd_start);
+                FSkip(cmnd_size);
+                uint trk_index <bgcolor=cBlue, fgcolor=cWhite>;  
+                ubyte is_loop <bgcolor=cBlue, fgcolor=cWhite>;  
+                ubyte trk_reserved1 <bgcolor=cBlue, fgcolor=cWhite>; 
+                ushort trk_id <bgcolor=cBlue, fgcolor=cWhite>;
+                uint play_length <bgcolor=cBlue, fgcolor=cWhite>;
+            }
+        } SeqREAD <open=false>;
+    }
+    //trk section
+    FSeek((int)TRK.TrkOffset);
+    local int TrkReturn = FTell();
+    FSkip(2);
+    ushort TrkAddressesSize;
+    ushort Trkcount <bgcolor=cGreen, fgcolor=cWhite>;
+    Align(TrkAddressesSize);
+    int TrkLoc[Trkcount] <bgcolor=cGreen, fgcolor=cWhite>;
+    local int m<hidden=true> = 0;
+    for ( m = 0; m < Trkcount; m++ ) {
+        struct TRK_READ {
+            FSeek(TrkLoc[m] + TrkReturn);
+            local int loctrk_offset<hidden=false> = TrkLoc[m] + TrkReturn;
+            ubyte trk_version <bgcolor=cGreen, fgcolor=cWhite>;
+            ubyte trk_type <bgcolor=cGreen, fgcolor=cWhite>;
+            ushort trk_size <bgcolor=cGreen, fgcolor=cWhite>;
+            ushort mtrl_index <bgcolor=cGreen, fgcolor=cWhite>;
+            ushort trk_bank <bgcolor=cGreen, fgcolor=cWhite>;
+            ushort trk_index <bgcolor=cGreen, fgcolor=cWhite>;
+            ubyte trk_reserved1 <bgcolor=cGreen, fgcolor=cWhite>;
+            ubyte trk_reserved2 <bgcolor=cGreen, fgcolor=cWhite>;
+        } TrkREAD<open=false>;
+    }
+    //mtrl section
+    FSeek((int)MTRL.MtrlOffset);
+    local int MtrlReturn = FTell();
+    FSkip(2);
+    ushort MtrlAddressesSize;
+    ushort Mtrlcount <bgcolor=cWhite, fgcolor=cBlack>;
+    Align(MtrlAddressesSize);
+    int MtrlLoc[Mtrlcount] <bgcolor=cWhite, fgcolor=cBlack>;
+    Align(MtrlAddressesSize);
+    local int x<hidden=true> = 0;
+    for ( x = 0; x < Mtrlcount; x++ ) {
+        struct MTRL_READ {
+            FSeek(MtrlLoc[x] + MtrlReturn);
+            FSkip(4);
+            byte ChannelCount;
+            byte Codec;
+            local CODEC encoding = (CODEC) Codec;
+            ushort MtrlNumber;
+            uint SampleRate;
+            uint LoopStart;
+            uint LoopEnd;
+            uint ExtraDataSize <bgcolor=cWhite, fgcolor=cBlack>;
+            uint StreamSize;
+            ushort ExtraDataId;
+            FSkip(24);
+            BigEndian();
+            ushort ExtraSize;
+            local int HCASize = ExtraSize + StreamSize;
+            LittleEndian();
+            FSkip(-8);
+            char HCA_Data[HCASize] <bgcolor=cWhite, fgcolor=cBlack>;
+        } Mtrl_READ <open=true>;
+    }
+    
+} SBIN<name="SBIN", open=true>;

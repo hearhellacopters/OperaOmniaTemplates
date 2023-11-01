@@ -1,0 +1,118 @@
+//------------------------------------------------
+//--- 010 Editor v9.1.0 Binary Template
+//
+//      File: XL20.bt
+//   Authors: Yretenai
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Data
+// File Mask: mst_command_ability.bin
+//  ID Bytes: 58 4C 14 00
+//   History:
+//   1.0    2020-06-26  Yretenai: Initial File
+//------------------------------------------------
+
+LittleEndian();
+
+typedef struct XL20STRING {
+    int size<name="Length">;
+    char text[size]<name="Text">;
+} XL20String;
+
+typedef struct XL20NAME {
+    char text[0x20]<name="Text">;
+} XL20Name;
+
+typedef struct XL20NAMETWO {
+    char text[0x60]<name="Text">;
+} XL20NameTwo;
+
+typedef struct XL20NAMETHREE {
+    char text[0x40]<name="Text">;
+} XL20NameThree;
+
+// !! ADD STRUCT DATA HERE
+// See DFFOO subdir
+typedef struct XL20STRUCT {
+    int data_id;
+    int data_index;
+    int charaID;
+    int LearningAbility;
+	byte is_default;
+	int UseNum;
+	short MotionID;
+	int voice_frame_;
+	int voice_id_;
+	byte hit_count;
+	int hit_frame_p_;
+	int hit_frame_p__1;
+	int hit_frame_p__2;
+	int hit_frame_p__3;
+	int hit_frame_p__4;
+	int hit_frame_p__5;
+	int hit_frame_p__6;
+	int hit_frame_p__7;
+	int hit_frame_p__8;
+	int hit_frame_p__9;
+	int hit_frame_p__10;
+	int hit_frame_p__11;
+	int hit_frame_p__12;
+	int hit_frame_p__13;
+	int hit_frame_p__14;
+	int hit_frame_p__15;
+	int hit_frame_p__16;
+	int hit_frame_p__17;
+	int hit_frame_p__18;
+	int hit_frame_p__19;
+	int hit_frame_p__20;
+	int hit_frame_p__21;
+	int hit_frame_p__22;
+	int hit_frame_p__23;
+	int hit_frame_p__24;
+	int hit_frame_p__25;
+	int hit_frame_p__26;
+	int hit_frame_p__27;
+	int hit_frame_p__28;
+	int hit_frame_p__29;
+	int hit_data_id;
+	int hit_data_id_1;
+	int hit_data_id_2;
+	int hit_data_id_3;
+	int hit_data_id_4;
+	int hit_data_id_5;
+	int hit_data_id_6;
+	int hit_data_id_7;
+	int hit_data_id_8;
+	int hit_data_id_9;
+	int hit_data_id_10;
+	int hit_data_id_11;
+	int hit_data_id_12;
+	int hit_data_id_13;
+	int hit_data_id_14;
+	int hit_data_id_15;
+	int hit_data_id_16;
+    int hit_data_id_17;
+    int hit_data_id_18;
+    int hit_data_id_19;
+	int hit_data_id_20;
+    int hit_data_id_21;
+	int hit_data_id_22;
+	int hit_data_id_23;
+	int hit_data_id_24;
+	int hit_data_id_25;
+	int hit_data_id_26;
+	int hit_data_id_27;
+	int hit_data_id_28;
+	int hit_data_id_29;
+	int group_;
+	int rank_;
+} XL20Struct;
+
+struct XL20 {
+    ushort magic<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x14">;
+    int count<name="Count">;
+    int max_size<name="Max Size", comment="Not per se actual max size, defines how much memory to allocate to deserialize. Usually aligned to 8 or 16 bytes.">;
+    int start<name="Start Pointer">;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

@@ -1,0 +1,22 @@
+//------------------------------------------------
+//--- 010 Editor v14.0 Binary Template
+//
+//      File: talk_effect.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: talk_effect.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct BATTLESTRUCT {
+    int UNK0;
+    int effect_id;
+    int UNK2;
+} BATTLEStruct;
+
+struct XL20 {
+    BATTLEStruct entries[FileSize()/12]<name="Structs", open=true, optimize=false>;
+} XL<name="XL20", open=true>;

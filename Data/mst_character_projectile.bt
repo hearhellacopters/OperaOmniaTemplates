@@ -1,0 +1,266 @@
+//------------------------------------------------
+//--- 010 Editor v9.1.0 Binary Template
+//
+//      File: XL20.bt
+//   Authors: Yretenai
+//   Version: 1.0
+//   Purpose: Parse struct-like (constant size) data
+//  Category: OO_Data
+// File Mask: mst_character_projectile.bin
+//  ID Bytes: 58 4C 14 00
+//   History:
+//   1.0    2020-06-26  Yretenai: Initial File
+//------------------------------------------------
+
+LittleEndian();
+local int cGrayZone<hidden=true> = 0xd9dadc;
+
+local int cOrange<hidden=true> = 0xaae3f9;
+
+local int Red<hidden=true> = 0x4C0000;
+
+
+typedef struct {
+    int CHARID;
+	int COMMAND_ID;
+
+	int projectileid1;
+	int unknown3;
+	int unknown4;
+	int unknown5;
+	int unknown6;
+	int unknown7;
+	int unknown8;
+	int unknown9;
+	int unknown10;
+	byte unknown11;
+
+	int projectileid2;
+	int unknown13;
+	int unknown14;
+	int unknown15;
+	int unknown16;
+	int unknown17;
+	int unknown18;
+	int unknown19;
+	int unknown20;
+	byte unknown21;
+
+	int projectileid3;
+	int unknown23;
+	int unknown24;
+	int unknown25;
+	int unknown26;
+	int unknown28;
+	int unknown27;
+	int unknown29;
+	int unknown30;
+	byte unknown31;
+
+	int projectileid4;
+	int unknown33;
+	int unknown34;
+	int unknown35;
+	int unknown36;
+	int unknown37;
+	int unknown38;
+	int unknown39;
+	int unknown40;
+	byte unknown41;
+
+	int projectileid5;
+	int unknown43;
+	int unknown44;
+	int unknown45;
+	int unknown46;
+	int unknown47;
+	int unknown48;
+	int unknown49;
+	int unknown50;
+	byte unknown51;
+
+	int projectileid6;
+	int unknown53;
+	int unknown54;
+	int unknown55;
+	int unknown56;
+	int unknown57;
+	int unknown58;
+	int unknown59;
+	int unknown60;
+	byte unknown61;
+
+	int projectileid7;
+	int unknown63;
+	int unknown64;
+	int unknown65;
+	int unknown66;
+	int unknown67;
+	int unknown68;
+	int unknown69;
+	int unknown70;
+	byte unknown71;
+
+	int projectileid8;
+	int unknown73;
+	int unknown74;
+	int unknown75;
+	int unknown76;
+	int unknown77;
+	int unknown78;
+	int unknown79;
+	int unknown80;
+	byte unknown81;
+
+	int projectileid9;
+	int unknown83;
+	int unknown84;
+	int unknown85;
+	int unknown86;
+	int unknown87;
+	int unknown88;
+	int unknown89;
+	int unknown90;
+	byte unknown91;
+
+	int projectileid10;
+	int unknown93;
+	int unknown94;
+	int unknown95;
+	int unknown96;
+	int unknown97;
+	int unknown98;
+	int unknown99;
+	int unknown100;
+	byte unknown101;
+
+	int projectileid11;
+	int unknown103;
+	int unknown104;
+	int unknown105;
+	int unknown106;
+	int unknown107;
+	int unknown108;
+	int unknown109;
+	int unknown110;
+	byte unknown111;
+
+	int projectileid12;
+	int unknown113;
+	int unknown114;
+	int unknown115;
+	int unknown116;
+	int unknown117;
+	int unknown118;
+	int unknown119;
+	int unknown120;
+	byte unknown121;
+
+	int projectileid13;
+	int unknown123;
+	int unknown124;
+	int unknown125;
+	int unknown126;
+	int unknown127;
+	int unknown128;
+	int unknown129;
+	int unknown130;
+	byte unknown131;
+
+	int projectileid14;
+	int unknown133;
+	int unknown134;
+	int unknown135;
+	int unknown136;
+	int unknown137;
+	int unknown138;
+	int unknown139;
+	int unknown140;
+	byte unknown141;
+
+	int projectileid15;
+	int unknown143;
+	int unknown144;
+	int unknown145;
+	int unknown146;
+	int unknown147;
+	int unknown148;
+	int unknown149;
+	int unknown150;
+	byte unknown151;
+
+	int projectileid16;
+	int unknown153;
+	int unknown154;
+	int unknown155;
+	int unknown156;
+	int unknown157;
+	int unknown158;
+	int unknown159;
+	int unknown160;
+	byte unknown161;
+
+	int projectileid17;
+	int unknown163;
+	int unknown164;
+	int unknown165;
+	int unknown166;
+	int unknown167;
+	int unknown168;
+	int unknown169;
+	int unknown170;
+	byte unknown171;
+
+	int projectileid18;
+	int unknown173;
+	int unknown174;
+	int unknown175;
+	int unknown176;
+	int unknown177;
+	int unknown178;
+	int unknown179;
+	int unknown180;
+	byte unknown181;
+
+	int projectileid19;
+	int unknown183;
+	int unknown184;
+	int unknown185;
+	int unknown186;
+	int unknown187;
+	int unknown188;
+	int unknown189;
+	int unknown190;
+	byte unknown191;
+
+	int projectileid20;
+	int unknown193;
+	int unknown194;
+	int unknown195;
+	int unknown196;
+	int unknown197;
+	int unknown198;
+	int unknown199;
+	int unknown200;
+    byte unknown201;
+} entry;
+
+// !! ADD STRUCT DATA HERE
+// See DFFOO subdir
+typedef struct XL20STRUCT {
+    int entries;
+    if(entries != 0){
+	entry data[entries];
+    }
+} XL20Struct;
+
+struct XL20 {
+    ushort magic<name="Magic", comment="XL">;
+    ushort version<name="Version", comment="0x14">;
+    int count<name="Count">;
+    int max_size<name="Max Size", comment="Not per se actual max size, defines how much memory to allocate to deserialize. Usually aligned to 8 or 16 bytes.">;
+    int Start<name="Start Pointer">;
+    int dummy<name="dummy">;
+    int dummy2<name="dummy">;
+    XL20Struct entries[count]<name="Structs", optimize=false>;
+} XL<name="XL20", open=true>;

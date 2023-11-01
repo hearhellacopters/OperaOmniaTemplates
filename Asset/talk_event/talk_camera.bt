@@ -1,0 +1,27 @@
+//------------------------------------------------
+//--- 010 Editor v14.0 Binary Template
+//
+//      File: talk_camera_type.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: talk_camera_type.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+typedef struct BATTLESTRUCT {
+    int UNK0;
+    float UNK1;
+    float UNK2;
+    float UNK3;
+    float UNK4;
+    float UNK5;
+    float UNK6;
+    float UNK7;
+} BATTLEStruct;
+
+struct XL20 {
+    BATTLEStruct entries[FileSize()/32]<name="Structs", open=true, optimize=false>;
+} XL<name="XL20", open=true>;

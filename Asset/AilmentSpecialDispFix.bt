@@ -1,0 +1,31 @@
+//------------------------------------------------
+//--- 010 Editor v11.0 Binary Template
+//
+//      File: AilmentSpecialDispFix_xor.bin
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: OO_Asset
+// File Mask: AilmentSpecialDispFix_xor.bin
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+
+//xor with aGc1amMyaG14OXBuZGo3cDl4
+
+typedef struct {
+    short sp_num;
+    short disp_cond;
+    short unk3;
+    short scale;
+    short offset_x;
+    short offset_y;
+    short tex_offset;
+    short tex_offset_1;
+}DATA<open=true>;
+
+struct {
+    short COUNT;
+    short MAX_SIZE; 
+    DATA entries[COUNT]<name="Structs", optimize=false>;
+}AilmentSpecialDispFix<open=true>;
