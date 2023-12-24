@@ -413,5 +413,13 @@ typedef enum <int> {
 	Falling_yellow_leaves411 = 411,
 	Falling_red_leaves412 = 412,
 	_413 = 413,
-	A_large_flower_field414 = 414
+	A_large_flower_field414 = 414,
+    _clear_Crystal_moving = 415,
+    Yellow_light_descends_orb = 416,
+    glow_from_the_sky= 417,
+    Red_and_Blue_light_passes_by = 418,
+    A_dark_energy_portal_froms = 419,
+    A_black_and_red_swirling_orb = 420,
+    A_clear_Crystal_upside_down = 421,
+    Red_energy_emanates_uncontrolled = 422,
 } EFFECT;

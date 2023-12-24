@@ -1,0 +1,970 @@
+//------------------------------------------------
+//--- 010 Editor v14.0 Binary Template
+//
+//      File: UDP.bt
+//   Authors: HearHellacopters
+//   Version: 1.0
+//   Purpose: read GpBinaryV2 Photon Server transmissions
+//  Category: Programming
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//   1.0   2023-12-15 HearHellacopters: Initial release.
+//------------------------------------------------
+BigEndian();
+
+#define _EG_IPHONE_PLATFORM 1;
+#define EGNetworkPort_UDP 5055;
+#define EGNetworkPort_TCP 4530;
+
+typedef enum <ubyte>
+{
+    Initv2Get  =  71, // 0x47
+    Initv2Post =  80, // 0x50
+    GpBinaryV2 = 243, // 0xF3
+    InitV3     = 245, // 0xF5
+} RtsMagicByte;
+
+typedef enum <uint> 
+{
+  NC_Closed = 0x0,
+  NC_DoingDNSResolution = 0x1,
+  NC_DNSResolutionDone = 0x2,
+  NC_Connecting = 0x3,
+  NC_NotConnectedError = 0x4,
+  NC_Connected = 0x5,
+} PhotonConnectState;
+
+typedef enum <ubyte> 
+{
+    ROOM_NAME                          = 255,
+    PLAYERNR                           = 254,
+    TARGET_PLAYERNR                    = 253,
+    PLAYER_LIST                        = 252,
+    PROPERTIES                         = 251,
+    BROADCAST                          = 250,
+    PLAYER_PROPERTIES                  = 249,
+    ROOM_PROPERTIES                    = 248,
+    CACHE                              = 247,
+    RECEIVER_GROUP                     = 246,
+    DATA                               = 245,
+    CODE                               = 244,
+    FLUSH                              = 243,
+    //242?
+    CLEANUP_CACHE_ON_LEAVE             = 241,
+    GROUP                              = 240,
+    REMOVE                             = 239,
+    PUBLISH_USER_ID                    = 239,
+    ADD                                = 238,
+    SUPPRESS_ROOM_EVENTS               = 237,
+    EMPTY_ROOM_TTL                     = 236,
+    PLAYER_TTL                         = 235,
+    EVENT_FORWARD                      = 234,
+    IS_COMING_BACK                     = 233,
+    IS_INACTIVE                        = 233,
+    CHECK_USER_ON_JOIN                 = 232,
+    EXPECTED_VALUES                    = 231,
+    ADDRESS                            = 230,
+    PEER_COUNT                         = 229,
+    ROOM_COUNT                         = 228,
+    MASTER_PEER_COUNT                  = 227,
+    //246?
+    USER_ID                            = 225,
+    APPLICATION_ID                     = 224,
+    MATCHMAKING_TYPE                   = 223,
+    ROOM_LIST                          = 222,
+    SECRET                             = 221,
+    APP_VERSION                        = 220,
+    NodeID                             = 219, 
+    INFO                               = 218,
+    CLIENT_AUTHENTICATION_TYPE         = 217,
+    CLIENT_AUTHENTICATION_PARAMETERS   = 216,
+    JOIN_MODE                          = 215,
+    CLIENT_AUTHENTICATION_DATA         = 214,
+    LOBBY_NAME                         = 213,
+    LOBBY_TYPE                         = 212,
+    LOBBY_STATS                        = 211,
+    REGION                             = 210,
+    URI_PATH                           = 209,
+    RPC_CALL_PARAMS                    = 208,
+    RPC_CALL_RET_CODE                  = 207,
+    RPC_CALL_RET_MESSAGE               = 206,
+    CACHE_SLICE_INDEX                  = 205,
+    PLUGINS                            = 204,
+    MASTER_CLIENT_ID                   = 203,
+    NICK_NAME                          = 202,
+    PluginName                         = 201,
+    PluginVersion                      = 200,
+    Flags                              = 199,
+    CloudType                          = 198, 
+    GameRemoveReason                   = 197,   
+    CLUSTER                            = 196,
+    EXPECTED_PROTOCOL                  = 195,
+    CUSTOM_INIT_DATA                   = 194,
+    ENCRYPTION_MODE                    = 193,
+    ENCRYPTION_DATA                    = 192,
+    RoomOptionFlags                    = 191,
+    ROOMID                             =  29,
+    DEBUG_                             =  24,
+    PROPERTIES_CHAT                    =  22,
+    WEBFLAGS                           =  21,
+    DEBUGMSG                           =  17,
+    SUBSCRIBE_RESULTS                  =  15,
+    HISTORY_LEN                        =  14, 
+    SKIP_MESSAGE                       =  12,
+    FRIENDS                            =  11,
+    STATUS                             =  10,
+    MSG_IDS                            =   9,
+    MSG_ID                             =   8,
+    CHANNEL_USER_COUNT                 =   6,
+    SENDER                             =   5,
+    SENDERS                            =   4,
+    MESSAGE                            =   3,
+    FIND_FRIENDS_RESPONSE_ROOM_ID_LIST =   2,
+    FIND_FRIENDS_REQUEST_LIST          =   1,
+    SERVER                             =   0,
+} ParameterCode;
+
+typedef enum <ubyte> 
+{
+  DoNotCache = 0, 
+  MergeCache = 1, 
+  ReplaceCache = 2, 
+  RemoveCache = 3,
+  AddToRoomCache = 4, 
+  AddToRoomCacheGlobal = 5, 
+  RemoveFromRoomCache = 6, 
+  RemoveFromCacheForActorsLeft = 7,
+  SliceIncreaseIndex = 10, 
+  SliceSetIndex = 11, 
+  SlicePurgeIndex = 12, 
+  SlicePurgeUpToIndex = 13
+} CacheOperation;
+
+typedef enum <ubyte>
+{
+    GpBinaryV16 = 1,
+    Json = 3,
+    GpBinaryV17 = 4,
+    GpBinaryV18 = 5,
+} ProtocolType;
+
+typedef enum <ubyte>
+{
+    UDP = 0,
+    TCP = 1,
+    WS  = 4,
+    WSS = 5,
+} ConnectionProtocol;            
+
+typedef enum <byte>
+{
+    JOIN                  = 255, //FF
+    LEAVE                 = 254, //FE
+    PROPERTIES_CHANGED    = 253, //FD
+    DISCONNECT            = 252, //FC
+    ERRORINFO             = 251, //FB
+    CACHE_SLICE_CHANGED   = 250, //FA
+    EventCacheSlicePurged = 249, //F9
+    LastPhotonEvent       = 240, //F0
+    ROOM_LIST_EVENT       = 230, //E6
+    ROOM_LIST_UPDATE      = 229, //E5
+    APP_STATS             = 226, //E2
+    LOBBY_STATS_EVENT     = 224, //E0
+    AUTH                  = 223, //DF
+    PUNCH_MSG             = 220, //DC
+    VOICE_FRAME_DATA      = 203, //CB
+    VOICE_DATA            = 202, //CA
+    MAX_CUSTOM_EVCODE     = 200, //DF
+    NoCodeSet             =   0,
+} EventCode;   
+
+typedef enum <ubyte>
+{
+    JOIN_                = 255, //FF
+    LEAVE_               = 254, //FE
+    RAISE_EV             = 253, //FD
+    SETPROPERTIES        = 252, //FC
+    GETPROPERTIES        = 251, //FB
+    PING                 = 249, 
+    CHANGE_GROUPS        = 248, //F8
+    AUTH_ONCE            = 231,
+    AUTHENTICATE         = 230, //E6
+    JoinLobby            = 229, 
+    LeaveLobby           = 228, 
+    CreateGame           = 227,
+    JoinGame             = 226, 
+    JoinRandomGame       = 225, 
+    DebugGame            = 223, 
+    FindFriends          = 222,
+    LobbyStats           = 221, 
+    Rpc                  = 219, 
+    Settings             = 218, 
+    GetGameList          = 217,
+    REMOVE_FRIENDS       =   7,
+    ADD_FRIENDS          =   6,
+    UPDATE_STATUS        =   5,
+    CHANNEL_HISTORY      =   4,
+    SEND_PRIVATE         =   3,
+    PUBLISH              =   2,
+    UNSUBSCRIBE          =   1,
+    SUBSCRIBE            =   0,
+} OperationCode;  
+
+typedef enum <ubyte>
+{
+  DISCONNECTED = 0x0,
+  CONNECTING = 0x1,
+  ACKNOWLEDGING_CONNECT = 0x2,
+  CONNECTED = 0x3,
+  DISCONNECTING = 0x4,
+  ACKNOWLEDGING_DISCONNECT = 0x5,
+  ZOMBIE = 0x6,
+} PeerState;
+
+typedef enum <ubyte>
+{
+    OTHERS        = 0,
+    ALL_          = 1,
+    MASTER_CLIENT = 2,
+} ReceiverGroup;
+
+typedef enum <ubyte>
+{
+    Custom_ = 0,
+    Steam = 1,
+    Facebook = 2,
+    Oculus = 3,
+    PlayStation = 4,
+    Xbox = 5,
+    PlayerIo = 8,
+    Jwt = 9,
+    Viveport = 10, // 0x0A
+    Nintendo = 11, // 0x0B
+    PlayStation5 = 12, // 0x0C
+    None = 254, // 0xFE
+} ClientAuthenticationType;
+
+typedef enum <ushort>
+{
+    SecurityExceptionOnConnect        = 1022, //03 FE
+    EXCEPTION_ON_CONNECT              = 1023, //03 FF
+    CONNECT                           = 1024, //04 00
+    DISCONNECT_                       = 1025, //04 01
+    EXCEPTION                         = 1026, //04 02
+    QUEUE_OUTGOING_RELIABLE_WARNING   = 1027, //04 03
+    QUEUE_OUTGOING_UNRELIABLE_WARNING = 1029, //04 05
+    SEND_ERROR                        = 1030, //04 06
+    QUEUE_OUTGOING_ACKS_WARNING       = 1031, //04 07
+    QUEUE_INCOMING_RELIABLE_WARNING   = 1033, //04 09
+    QUEUE_INCOMING_UNRELIABLE_WARNING = 1035, //04 05
+    QUEUE_SENT_WARNING                = 1037, //04 0D
+    INTERNAL_RECEIVE_EXCEPTION        = 1039, //04 0F
+    TIMEOUT_DISCONNECT                = 1040, //04 10
+    DISCONNECT_BY_SERVER              = 1041, //04 11
+    DISCONNECT_BY_SERVER_USER_LIMIT   = 1042, //04 12
+    DISCONNECT_BY_SERVER_LOGIC        = 1043, //04 13
+    DisconnectByServerReasonUnknown   = 1044,
+    ENCRYPTION_ESTABLISHED            = 1048, //04 18
+    ENCRYPTION_FAILED_TO_ESTABLISH    = 1049, //04 19
+    ServerAddressInvalid              = 1050,
+    DnsExceptionOnConnect             = 1051,
+} StatusCode;
+
+typedef enum <ushort>
+{
+    InvalidRequestParameters = -6, // 0xFFFA
+    ArgumentOutOfRange = -4, // 0xFFFC
+    OperationDenied = -3, // 0xFFFD
+    OperationInvalid = -2, // 0xFFFE
+    InternalServerError = -1, // 0xFFFF
+    Ok = 0,
+    ActorRemoved = 32734, // 0x7FDE
+    ConnectionSwitch = 32735, // 0x7FDF
+    AuthRequestWaitTimeout = 32736, // 0x7FE0
+    ExpectedGameCheckFailure = 32737, // 0x7FE1
+    ExpectedGSCheckFailure = 32738, // 0x7FE2
+    EventCacheExceeded = 32739, // 0x7FE3
+    SecureConnectionRequired = 32740, // 0x7FE4
+    SlotError = 32742, // 0x7FE6
+    OperationLimitReached = 32743, // 0x7FE7
+    ExternalHttpCallFailed = 32744, // 0x7FE8
+    HttpLimitReached = 32745, // 0x7FE9
+    JoinFailedFoundActiveJoiner = 32746, // 0x7FEA
+    JoinFailedFoundExcludedUserId = 32747, // 0x7FEB
+    JoinFailedWithRejoinerNotFound = 32748, // 0x7FEC
+    JoinFailedFoundInactiveJoiner = 32749, // 0x7FED
+    JoinFailedPeerAlreadyJoined = 32750, // 0x7FEE
+    PluginMismatch = 32751, // 0x7FEF
+    PluginReportedError = 32752, // 0x7FF0
+    AuthenticationTokenExpired = 32753, // 0x7FF1
+    CustomAuthenticationOverload = 32754, // 0x7FF2
+    CustomAuthenticationFailed = 32755, // 0x7FF3
+    InvalidRegion = 32756, // 0x7FF4
+    MaxCcuReached = 32757, // 0x7FF5
+    GameIdNotExists = 32758, // 0x7FF6
+    RedirectRepeat = 32759, // 0x7FF7
+    NoMatchFound = 32760, // 0x7FF8
+    UserBlocked = 32761, // 0x7FF9
+    ServerFull = 32762, // 0x7FFA
+    AlreadyMatched = 32763, // 0x7FFB
+    GameClosed = 32764, // 0x7FFC
+    GameFull = 32765, // 0x7FFD
+    GameIdAlreadyExists = 32766, // 0x7FFE
+    InvalidAuthentication = 32767, // 0x7FFF
+} ErrorCode;
+
+typedef enum <ubyte> {
+    CT_NONE                         =  0,
+    CT_ACK                          =  1,
+    CT_CONNECT                      =  2,
+    CT_VERIFYCONNECT                =  3,
+    CT_DISCONNECT                   =  4,
+    CT_PING                         =  5,
+    CT_SENDRELIABLE                 =  6,
+    CT_SENDUNRELIABLE               =  7,
+    CT_SENDFRAGMENT                 =  8,
+    CT_UNK_9                        =  9,
+    CT_UNK_10                       = 10,
+    CT_SENDUNRELIABLE_UNSEQUENCED   = 11,
+    CT_EG_SERVERTIME                = 12,
+    CT_EG_SEND_UNRELIABLE_PROCESSED = 13,
+    CT_EG_SEND_RELIABLE_UNSEQUENCED = 14,
+    CT_EG_SEND_FRAGMENT_UNSEQUENCED = 15,
+    CT_EG_ACK_UNSEQUENCED           = 16,
+} cType;
+
+typedef enum <ubyte>{
+     HEADER_UDP_PACK_LENGTH = 12,
+     CmdSizeMinimum  = 12,
+     CmdSizeAck = 20,
+     CmdSizeConnect = 44,
+     CmdSizeVerifyConnect = 44,
+     CmdSizeDisconnect = 12,
+     CmdSizePing = 12,
+     CmdSizeReliableHeader = 12,
+     CmdSizeUnreliableHeader = 16,
+     CmdSizeUnsequensedHeader = 16,
+     CmdSizeFragmentHeader = 32,
+     CmdSizeMaxHeader = 36,
+     reservedByte = 4,
+} minSize;
+
+typedef enum <ubyte>{
+  None_,
+  AllowPooledByteArray,
+  WrapIncomingStructs,
+} DeserializationFlags;
+
+typedef enum <ubyte>{
+    hasCRC        = 0xCC,
+    hasEncryption = 0x01,
+} mFlag;
+
+typedef enum <ubyte>{
+    Init = 0,
+    InitResponse = 1,
+    Operation = 2, //need
+    OperationResponse = 3, //done
+    Event = 4, //working on
+    Disconnect_Message = 5,
+    InternalOperationRequest = 6, //need
+    InternalOperationResponse = 7, //done
+    Message = 8,
+    RawMessage = 9,
+    Unknown_ = 255, // 0xFF
+} RtsMessageType;
+
+typedef struct
+{
+    ushort peerID<bgcolor=cRed, fgcolor=cWhite>;
+    ushort mtu;
+    ushort rev2;
+    ubyte always128;
+    ubyte rev3;
+    ushort rev4;
+    ushort ChannelCount;
+    uint rev5;
+    uint rev6;
+    ushort rev7;
+    ushort always514;
+    uint always136;
+    uint always19;
+} cType2_3 ;
+
+typedef enum <char>
+{
+    Unknown            =  0,  // 0x00
+    
+    Null               =  42, // 0x2A *
+    Dictionary         =  68, // 0x44 D
+    StringArray        =  97, // 0x61 a
+    Byte               =  98, // 0x62 b
+    Custom             =  99, // 0x63 c
+    Double             = 100, // 0x64 d
+    EventData          = 101, // 0x65 e
+    Float              = 102, // 0x66 f
+    Hashtable          = 104, // 0x68 h
+    Integer            = 105, // 0x69 i
+    Short              = 107, // 0x6B k
+    Long               = 108, // 0x6C l
+    DisconnectMessage  = 109, // 0x6D m I still need this programming
+    IntegerArray       = 110, // 0x6E n
+    Boolean            = 111, // 0x6F o
+    Operation_Response = 112, // 0x70 p
+    Operation_Request  = 113, // 0x71 q
+    String             = 115, // 0x73 s
+    ByteArray          = 120, // 0x78 x
+    Array              = 121, // 0x79 y
+    ObjectArray        = 122, // 0x7A z
+    
+	INVALID            = 255, // 0xFF
+} TypeCode; 
+
+typedef struct (int size) {
+    char strData[size];
+} stringRead <read=ReadSTRING>;
+
+typedef struct (int size) {
+    ubyte byteData[size];
+} byteRead<open=true>;
+
+typedef struct (int size) {
+    uint intData[size];
+} intRead<open=true>;
+
+string ReadSTRING( stringRead &file )
+{
+    if( exists( file.strData ) )
+        return file.strData;
+    else
+        return "";
+}
+
+typedef struct (struct CMDREAD &a, int passedType, int flag){
+    Deserialize(a, passedType, flag);
+} DictionaryRead<open=true>;
+
+void Deserialize(struct CMDREAD &a, int passedType, int flag){
+    //flags for 101 e, 112 p, 113 q
+    if(passedType!=0){
+        local TypeCode pmTypeCode = passedType;
+    } else {
+        TypeCode pmTypeCode;
+        a.mPayloadSize-=1;
+    }
+    switch (pmTypeCode){
+        case Unknown_:
+        case Null:
+            if(flag){
+                ParameterCode NullParameterCode;
+                a.mPayloadSize-=1;
+                Deserialize(a, 0, code);
+            }
+            if(a.mPayloadSize == 0){
+                break;
+            }
+            ushort capacity;
+            a.mPayloadSize-=2;
+            local int i<hidden=true> = 0;
+            for(i = 0; i< capacity ; i++){
+                ParameterCode code;
+                a.mPayloadSize-=1;
+                Deserialize(a, 0, code);
+                if(a.mPayloadSize == 0){
+                    break;
+                }
+            }
+            break;
+        case Dictionary:
+            ubyte typeCode1;
+            ubyte typeCode2;
+            ushort num;
+            a.mPayloadSize-=4;
+            local byte flag1 = typeCode1 == 0 || typeCode1 == 42;
+            local byte flag2 = typeCode2 == 0 || typeCode2 == 42;
+            local int i<hidden=true> = 0;
+            for(i = 0; i< num ; i++){
+                if(flag1){
+                    ubyte dTypeCode1;
+                    a.mPayloadSize-=1;
+                    DictionaryRead pmDictKey(a, dTypeCode1, 0);
+                } else {
+                    DictionaryRead pmDictKey(a, 0, 0);
+                }
+                if(flag2){
+                    ubyte dTypeCode2;
+                    a.mPayloadSize-=1;
+                    DictionaryRead pmDictObj(a, dTypeCode2, 0);
+                } else {
+                    DictionaryRead pmDictObj(a, 0, 0);
+                }
+            }
+            break;
+        case Byte:
+            ubyte mpByte<bgcolor=cAqua , fgcolor=cBlack>;
+            a.mPayloadSize-=1;
+            break;
+        case Custom:
+            ubyte customTypeCode;
+            ushort cLength;
+            a.mPayloadSize-=3;
+            byteRead customData(cLength)<bgcolor=cAqua , fgcolor=cBlack>;
+            a.mPayloadSize-=cLength;
+            break;
+        case Double:
+            double mpDouble<bgcolor=cAqua , fgcolor=cBlack>;
+            a.mPayloadSize-=8;
+            break;
+        case EventData:
+            ubyte EventDataCode;
+            ushort eCapacity;
+            a.mPayloadSize-=3;
+            local int i<hidden=true> = 0;
+            for(i = 0; i< eCapacity ; i++){
+                DictionaryRead pmDictEvent(a, 0, flag);
+            }
+            break;
+        case Float:
+            float mpFloat<bgcolor=cAqua , fgcolor=cBlack>;
+            a.mPayloadSize-=4;
+            break;
+        case Hashtable:
+            ushort hCapacity;
+            a.mPayloadSize-=2;
+            local int i<hidden=true> = 0;
+            for(i = 0; i < hCapacity ; i++){
+                TypeCode hTypeKey;
+                a.mPayloadSize-=1;
+                DictionaryRead pmHashKey(a, hTypeKey, 0);
+                TypeCode hTypeObj;
+                a.mPayloadSize-=1;
+                DictionaryRead pmHashObj(a, hTypeObj, 0);
+            }
+            break;
+        case Integer:
+            uint mpInteger<bgcolor=cAqua , fgcolor=cBlack>;
+            a.mPayloadSize-=4;
+            break;
+        case Short:
+            ushort mpShort<bgcolor=cAqua , fgcolor=cBlack>;
+            a.mPayloadSize-=2;
+            break;
+        case Long:
+            uint64 mpLong<bgcolor=cAqua , fgcolor=cBlack>;
+            a.mPayloadSize-=8;
+            break;
+        case DisconnectMessage:
+            //I still need programming here
+            ushort mDisconnectCode;
+            a.mPayloadSize -= 2;
+            DictionaryRead pmDiscon(a, 0, mDisconnectCode);
+            ushort capacity;
+            a.mPayloadSize -= 2;
+            local int i<hidden=true> = 0;
+            for(i = 0; i< capacity ; i++){
+                ParameterCode rCode;
+                a.mPayloadSize-=1;
+                DictionaryRead pmDisconObj(a, 0, 0);
+                if(a.mPayloadSize ==0){
+                    break;
+                }
+            }
+            break;
+        case IntegerArray:
+            if(flag <= 0){
+                uint mpArrayInteger;
+                a.mPayloadSize-=4;
+            } else {
+                intRead mpArrayInteger(flag)<bgcolor=cAqua , fgcolor=cBlack>;
+                a.mPayloadSize-=flag*4;
+            }
+            break;
+        case Boolean:
+            byte mpBoolean;
+            a.mPayloadSize-=1;
+            break;
+        case Operation_Response:
+            OperationCode mrOperationCode;
+            ushort mrReturnCode;
+            a.mPayloadSize-=3;
+            DictionaryRead pmResponse(a, 0, flag);
+            ushort mrCapacity;
+            a.mPayloadSize-=2;
+            local int i<hidden=true> = 0;
+            for(i = 0; i< mrCapacity ; i++){
+                ubyte mrCode;
+                a.mPayloadSize-=1;
+                DictionaryRead mrDictionaryResponse(a, 0, flag);
+            }
+            break;
+        case Operation_Request:
+            OperationCode mrOperationCode;
+            ushort rCapacity;
+            a.mPayloadSize-=3;
+            local int i<hidden=true> = 0;
+            for(i = 0; i< rCapacity ; i++){
+                ubyte rCode;
+                a.mPayloadSize-=1;
+                DictionaryRead prDictionaryRequest(a, 0, flag);
+            }
+            break;
+        case String:
+            ushort pmSSize;
+            a.mPayloadSize-=2;
+            stringRead pmString(pmSSize)<bgcolor=cAqua , fgcolor=cBlack>;
+            a.mPayloadSize-=pmSSize;
+            break;
+        case ByteArray:
+            uint pmSize;
+            a.mPayloadSize-=4;
+            byteRead pmByteArray(pmSize)<bgcolor=cAqua , fgcolor=cBlack>;
+            a.mPayloadSize-=pmSize;
+            break;
+        case Array:
+            ushort aNum1;
+            TypeCode aNum2;
+            a.mPayloadSize-=3;
+            switch (aNum2){
+                case Dictionary:
+                    ubyte keyTypeCode;
+                    ubyte valTypeCode;
+                    a.mPayloadSize-=2;
+                    local int i<hidden=true> = 0;
+                    for(i = 0; i< aNum1; i++){
+                        ushort num;
+                        a.mPayloadSize-=2;
+                        local int z<hidden=true> = 0;
+                        for(z = 0; z< num; z++){
+                            if(keyTypeCode > 0){
+                                DictionaryRead aDictKey(a, keyTypeCode, 0);
+                            } else {
+                                ubyte type2;
+                                a.mPayloadSize-=1;
+                                DictionaryRead aDictKey(a, type2, 0);
+                            }
+                            
+                            if(valTypeCode > 0){
+                                DictionaryRead aDictType(a, valTypeCode, 0);
+                            } else {
+                                ubyte type3;
+                                a.mPayloadSize-=1;
+                                DictionaryRead aDictType(a, type3, 0);
+                            }
+                        }
+                    }
+                    break;
+                case Byte:
+                    Deserialize(1, ByteArray, 0);
+                    break;
+                case Custom:
+                    ubyte akey;
+                    a.mPayloadSize-=1;
+                    local int i<hidden=true> = 0;
+                    for(i = 0; i< aNum1; i++){
+                        ushort alength;
+                        a.mPayloadSize-=2;
+                        byteRead customData(alength)<bgcolor=cAqua , fgcolor=cBlack>;
+                        a.mPayloadSize-=alength;
+                    }
+                    break;
+                case Integer:
+                    DictionaryRead aDictInt(a, IntegerArray, aNum1);
+                    break;
+                case ByteArray:
+                    local int i<hidden=true> = 0;
+                    for(i = 0; i< aNum1; i++){
+                        DictionaryRead aDictInt(a, ByteArray, 0);
+                    }
+                    break;
+                case Array:
+                    DictionaryRead aDictArray(a, Array, 0);
+                    local int i<hidden=true> = 0;
+                    for(i = 0; i< aNum1; i++){
+                        DictionaryRead aDictArray(a, Array, 0);
+                    }
+                    break;
+                default:
+                    local int i<hidden=true> = 0;
+                    for(i = 0; i< aNum1; i++){
+                        DictionaryRead aDictType(a, aNum2, 0);
+                    }
+                    break;
+            }
+            break;
+        case ObjectArray:
+            ushort poLength;
+            a.mPayloadSize-=2;
+            local int i<hidden=true> = 0;
+            for(i = 0; i< poLength; i++){
+                ubyte oType;
+                a.mPayloadSize-=1;
+                DictionaryRead aDictObject(a, oType, 0);
+            }
+            break;
+        default:
+            break;
+    }
+};
+
+typedef struct (struct CMDREAD &a) {   
+    RtsMagicByte MagicByte<bgcolor=cBlue, fgcolor=cWhite>;
+    Assert(MagicByte == GpBinaryV2);
+    local int startIndex<hidden=true> = 2;
+    //IRpcProtocol
+    byte num<hidden=true>;
+    local RtsMessageType rmType = num & 127;
+    local ubyte IsEncrypted = num & 128;
+    a.mPayloadSize -= 2;
+    if(!IsEncrypted){
+        switch (rmType){
+            case Init:
+                ubyte protocolVersionMajor<bgcolor=cGreen, fgcolor=cWhite>;
+                ubyte protocolVersionMinor<bgcolor=cGreen, fgcolor=cWhite>;
+                byte num2<hidden=true>;
+                a.mPayloadSize -= 3;
+                if(num2 < 65){
+                    FSkip(-1);
+                    ubyte M_CLIENT_VERSION_MAJOR<bgcolor=cGreen, fgcolor=cWhite>;
+                    ubyte M_CLIENT_VERSION_MINOR<bgcolor=cGreen, fgcolor=cWhite>;
+                    ubyte M_CLIENT_VERSION_BUILD<bgcolor=cGreen, fgcolor=cWhite>;
+                    local ubyte M_CLIENT_VERSION_REVISION = 0;
+                    ushort resv<bgcolor=cGreen, fgcolor=cWhite>;
+                } else {
+                    FSkip(-1);
+                    ubyte M_CLIENT_MINOR_MAJOR_MIX<bgcolor=cGreen, fgcolor=cWhite>;
+                    local ubyte M_CLIENT_VERSION_MAJOR = (num2 & 0xFFFFFFF0) >> 4;
+                    local ubyte M_CLIENT_VERSION_MINOR = num2 ^ (16 * M_CLIENT_VERSION_MAJOR);
+                    ubyte M_CLIENT_VERSION_BUILD<bgcolor=cGreen, fgcolor=cWhite>;
+                    ubyte M_CLIENT_VERSION_REVISION<bgcolor=cGreen, fgcolor=cWhite>;
+                    local ubyte sdkId = num2 >> 1;
+                    local ubyte usingDebugLib = (num2 >> 1) >> 0;
+                    ushort resv<bgcolor=cGreen, fgcolor=cWhite>;
+                } 
+                a.mPayloadSize -= 4;
+                char applicationId[32]<bgcolor=cAqua , fgcolor=cBlack>;
+                a.mPayloadSize -= 32;
+                break;
+            case OperationResponse:
+            case InternalOperationResponse:
+                OperationCode mOperationCode;
+                ushort mReturnCode;
+                a.mPayloadSize -= 3;
+                Deserialize(a, 0, 0);
+                if(a.mPayloadSize != 0){
+                    ushort rCapacity;
+                    a.mPayloadSize-=2;
+                    local int i<hidden=true> = 0;
+                    for(i = 0; i< rCapacity ; i++){
+                        ubyte rCode;
+                        a.mPayloadSize-=1;
+                        DictionaryRead pmDictObj(a, 0, 0);
+                        if(a.mPayloadSize <= 0){
+                            break;
+                        }
+                    }
+                }
+                break;
+            case Operation:
+            case InternalOperationRequest:
+                OperationCode mOperationCode;
+                ushort capacity;
+                a.mPayloadSize -= 3;
+                local int i<hidden=true> = 0;
+                for(i = 0; i< capacity ; i++){
+                    ParameterCode rCode;
+                    a.mPayloadSize-=1;
+                    DictionaryRead pmOpReObj(a, 0, 0);
+                    if(a.mPayloadSize <= 0){
+                        break;
+                    }
+                }
+                break;
+            case InitResponse:
+                //Doesn't appear to be a reason for this data here
+                //has been a single byte
+                OperationCode mOperationCode;
+                a.mPayloadSize -= 1;
+                break;
+            case Disconnect_Message:
+                ushort mDisconnectCode;
+                a.mPayloadSize -= 2;
+                DictionaryRead pmDisconObj(a, 0, 0);
+                ushort capacity;
+                a.mPayloadSize -= 2;
+                local int i<hidden=true> = 0;
+                for(i = 0; i< capacity ; i++){
+                    ParameterCode rCode;
+                    a.mPayloadSize-=1;
+                    DictionaryRead pmDisconObj(a, 0, 0);
+                    if(a.mPayloadSize <= 0){
+                        break;
+                    }
+                }
+                break;
+            case Event:
+                OperationCode mOperationCode;
+                ushort capacity;
+                a.mPayloadSize -= 3;
+                local int i<hidden=true> = 0;
+                for(i = 0; i< capacity; i++){
+                    ParameterCode mParam;
+                    a.mPayloadSize -= 1;
+                    DictionaryRead pmEvent(a, 0, 0);
+                    if(a.mPayloadSize <= 0){
+                        break;
+                    }
+                }
+                break;
+            case Message:
+            case RawMessage:
+            default:
+                //will all just be byte arrays
+                break;
+        }
+    }
+    if(a.mPayloadSize > 0){
+        ubyte payloadRemainder[a.mPayloadSize];
+    }
+} payLoadStruct<open=true>;
+
+typedef struct {
+    cType mCommandType<bgcolor=cWhite, fgcolor=cBlack>;
+    if(mCommandType)
+    {
+        ubyte mCommandChannelID;
+        ubyte mCommandFlags<comment="1 for ReliableCommand, else UnreliableCommand">;
+        ubyte mReservedByte;
+        uint mCommandLength;
+        local uint mPayloadSize = 0;
+        uint mReliableSequenceNumber;
+        switch (mCommandType){
+            case CT_ACK: //1
+                Assert(mCommandLength == CmdSizeAck);
+                uint mAckReceivedReliableSequenceNumber;
+                uint mAckReceivedSentTime;
+                //no payload
+                //fixed size of 12
+                //mCommandFlags should be 1
+                break;
+            case CT_CONNECT: //2
+                //fixed size of 44 (payload of 32)
+                Assert(mCommandLength == CmdSizeConnect);
+                //fixed payload read
+                //mCommandFlags should be 1
+                cType2_3 payload<open=true>;
+                break;
+            case CT_VERIFYCONNECT: //3
+                //sets peerID
+                //should always be loc 0x2C
+                Assert(FTell() == 44);
+                //mCommandFlags should be 1
+                cType2_3 payload<open=true>;
+                break;
+            case CT_DISCONNECT: //4
+                Assert(mCommandLength == CmdSizeDisconnect);
+                mPayloadSize = mCommandLength - CmdSizeDisconnect;
+                //fixed size of 12
+                //mCommandFlags should be 2
+                break;
+            case CT_PING: //5
+                mPayloadSize = mCommandLength - CmdSizePing;
+                //mCommandFlags should be 1
+                break;
+            case CT_SENDRELIABLE: //6          
+                mPayloadSize = mCommandLength - CmdSizeReliableHeader;
+                //size = 12 + payload.Length
+                //mCommandFlags should be 1
+                break;
+            case CT_SENDUNRELIABLE: //7
+                uint mUnreliableSequenceNumber;
+                mPayloadSize = mCommandLength - CmdSizeUnreliableHeader;
+                //size = 16 + payload.Length
+                //mCommandFlags should be 0
+                break;
+            case CT_SENDFRAGMENT: //8
+                uint mStartSequenceNumber;
+                uint mFragmentCount;
+                uint mFragmentNumber;
+                uint mTotalLength;
+                uint mFragmentOffset;
+                mPayloadSize = mCommandLength - CmdSizeFragmentHeader;
+                //size = 32 + payload.Length
+                //mCommandFlags should be 1
+                break;
+            case CT_SENDUNRELIABLE_UNSEQUENCED: //11
+                uint mUnsequencedGroupNumber;
+                mPayloadSize = mCommandLength - CmdSizeUnsequensedHeader;
+                //size = 16 + payload.Length
+                //mCommandFlags should be 0
+                break;
+            case CT_EG_SEND_RELIABLE_UNSEQUENCED: //14
+                mPayloadSize = mCommandLength - CmdSizeReliableHeader;
+                //size = 12 + payload.Length
+                //mCommandFlags should be 3
+                break;
+            case CT_EG_SEND_FRAGMENT_UNSEQUENCED: //15
+                uint mStartSequenceNumber;
+                uint mFragmentCount;
+                uint mFragmentNumber;
+                uint mTotalLength;
+                uint mFragmentOffset;
+                mPayloadSize = mCommandLength - CmdSizeFragmentHeader;
+                //size = 32 + payload.Length
+                //mCommandFlags should be 3
+                break;
+            case CT_EG_ACK_UNSEQUENCED: //16
+                uint mAckReceivedReliableSequenceNumber;
+                uint mAckReceivedSentTime;
+                //no payload
+                break;
+            default:
+                mPayloadSize = mCommandLength - CmdSizeMinimum;
+                break;
+        };
+        if(mPayloadSize > 0){
+            //subheader
+            ubyte TryParseHeader<hidden=true>;
+            FSkip(-1);
+            if(TryParseHeader == GpBinaryV2) {
+                payLoadStruct payLoad(this);
+            } else {
+                ubyte payload [mPayloadSize]<bgcolor=cAqua , fgcolor=cBlack>;
+            }
+        }
+    }
+} CMDREAD;
+
+//main struct
+
+//header
+
+local string packet_type = "Client"; 
+ushort peerID<comment="0 on client msg, 0xFF, 0xF3 or 0xF0 for client.">; 
+  
+if( peerID == 0
+){
+    packet_type = "Server";
+}    
+mFlag mFlags<format=hex, comment="Can be 0x1 or 0xCC if a CRC int is sent. 1 for encrypted.">;
+ubyte mCommandCount;
+
+if(packet_type == "Client"){
+    uint mPingTime;
+} else {
+    uint mSentTime;
+}
+
+uint mChallenge <comment="TimeUnix() from player", format=hex, bgcolor=cYellow, fgcolor=cBlack>;
+
+if(mFlags == hasCRC){
+    uint mCRC;
+}
+Assert(mFlags!=1);
+//command reads
+
+local int i<hidden=true> = 0;
+
+for(i = 0; i < mCommandCount; i++){
+    CMDREAD cmd<open=true, optimize=false>;
+}

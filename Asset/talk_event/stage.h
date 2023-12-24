@@ -175,4 +175,5 @@ typedef enum <int> {
     INT_Ronka_Ruins177 = 177,
     EXT_Night_Old_Castle_in_the_Forest178 = 178,
     EXT_Spiritus_World_of_Illusions179 = 179,
+    EXT_Floating_Stone_Yellow_Clouds= 180,
  } STAGE;

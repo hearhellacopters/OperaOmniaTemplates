@@ -1060,5 +1060,7 @@ typedef enum <int> {
 	Dark_Xezat_Manikin = 1057,
 	Cloud_2 = 1058,
 	Zack_2 = 1059,
-	Trance_Eiko  = 1060
+	Trance_Eiko  = 1060,
+    Ultimecia_2 = 1061,
+    Papalymo_2 = 1062
 } UNIT;
